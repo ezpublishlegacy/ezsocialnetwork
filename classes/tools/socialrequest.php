@@ -19,8 +19,11 @@ class SocialRequest
     {
         if (!empty($params)) {
             $url = "?";
-            foreach ($params as $key => $param) {
-                $url .= $key . '=' .$param . "&";
+            foreach ($params as $key => $value) {
+                if ($value) {
+                    $url .= $key . '=' .$value . "&";
+                }
+
             }
             $url = substr($url, 0, -1);
         }
