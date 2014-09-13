@@ -30,7 +30,7 @@ class SocialModel
         // Hard initilise simple types, lazy load more complex ones.
         foreach ($array as $key => $val) {
             if (property_exists($this, $key)) {
-                if ($key == 'url') {
+                if (in_array($key, array('url', 'urls'))) {
                     $this->$key = rawurlencode($val);
                 } else {
                     $this->$key = $val;
