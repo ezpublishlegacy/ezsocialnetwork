@@ -27,10 +27,14 @@ class SocialModel
      */
     protected function mapTypes($array)
     {
+        $notEncodeUrl = false;
+        if (isset($array['not_encode_url'])) {
+            $notEncodeUrl = $array['not_encode_url'];
+        }
         // Hard initilise simple types, lazy load more complex ones.
         foreach ($array as $key => $val) {
             if (property_exists($this, $key)) {
-                if (in_array($key, array('url', 'urls'))) {
+                if (in_array($key, array('url', 'urls')) && !$notEncodeUrl) {
                     $this->$key = rawurlencode($val);
                 } else {
                     $this->$key = $val;
