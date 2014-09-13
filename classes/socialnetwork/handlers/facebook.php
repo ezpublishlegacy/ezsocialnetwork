@@ -38,4 +38,24 @@ class Facebook extends SocialModel
             $facebook->countByUrl();
         }
     }
+
+    public function totalCount() {
+        return FacebookGraph::likeCount(array(
+            'urls' => $this->urls,
+        ));
+    }
+
+    public function countUrlStatsByFQl() {
+        if (is_array($this->url) && (count($this->url) > 1)) {
+            return FacebookFQL::statMultipleUrls(array(
+                'url' => $this->url,
+                'format' => $this->json
+            ));
+        } else {
+            return FacebookFQL::statOneUrl(array(
+                'url' => $this->url,
+                'format' => $this->json
+            ));
+        }
+    }
 }
