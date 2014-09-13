@@ -15,19 +15,19 @@ class SocialRequest
      * @param  array  $params     [description]
      * @return [type]             [description]
      */
-    public function request($hostMethod, $params = array())
+    public function request($hostMethod, $params = false)
     {
-        if (!empty($params)) {
-            $url = "?";
+        $url = "";
+        if (!empty($params) && is_array($params)) {
+            $url .= "?";
             foreach ($params as $key => $value) {
                 if ($value) {
                     $url .= $key . '=' .$value . "&";
                 }
-
             }
             $url = substr($url, 0, -1);
         }
-        return $this->call($hostMethod.$url);
+        return $this->call($hostMethod.$url, $params);
     }
 
     /**
@@ -35,10 +35,14 @@ class SocialRequest
      * @param  [type] $url [description]
      * @return [type]      [description]
      */
-    public function call($url)
+
+    public function call($url, $jsonPost)
     {
         $curl = new CurlHttpClient($url);
         $curl->setOption($this->configCurl);
+        if ($jsonPost) {
+            $curl->setOption(array(CURLOPT_POSTFIELDS => $jsonPost));
+        }
         return $curl->getResponse();
     }
 }
