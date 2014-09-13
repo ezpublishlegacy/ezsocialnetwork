@@ -55,6 +55,14 @@ CREATE TABLE `ezdashboard_facebook` (
     PRIMARY KEY(id)
 ) COMMENT='' ENGINE='InnoDB' COLLATE 'utf8_general_ci';
 
+CREATE TABLE `ezdashboard_ezpublish` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `visit_count` int(6) NOT NULL,
+    `date_add` int(11) NOT NULL,
+    `date_modified` int(11) NOT NULL,
+    PRIMARY KEY(id)
+) COMMENT='' ENGINE='InnoDB' COLLATE 'utf8_general_ci';
+
 CREATE TABLE `ezdashboard_google` (
     `id` int NOT NULL AUTO_INCREMENT,
     `count` int(6) NOT NULL,
