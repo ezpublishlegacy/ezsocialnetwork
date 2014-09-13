@@ -44,8 +44,8 @@ class FacebookAPI extends SocialRequest
          */
         $jsonString = $instanceFacebook->request($instanceFacebook->url("restserver.php"), $parameters);
         $json = json_decode($jsonString, true);
-        if (isset($json['error_code']) && $json['error_code'] == 100) {
-            eZDebug::writeError( $json['error_msg'], 'Facebook API' );
+        if (isset($json['error_code'])) {
+            eZDebug::writeError( $json['error_msg'] . ": ". $json['error_msg'], 'Facebook API' );
             return false;
         }
         return $json;
