@@ -23,6 +23,7 @@ class SocialRequest
             foreach ($params as $key => $value) {
                 if ($value) {
                     $url .= $key . '=' .$value . "&";
+                    unset($params[$key]);
                 }
             }
             $url = substr($url, 0, -1);

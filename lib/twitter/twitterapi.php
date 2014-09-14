@@ -33,7 +33,7 @@ class TwitterAPI extends SocialRequest
      * @param  [type] $url [description]
      * @return [type]      [description]
      */
-    public static function countSharesTweetByUrl($url) {
+    public static function statsUrl($url) {
         $instanceTwitter = new TwitterAPI();
         /**
          * This instance return an object JSON

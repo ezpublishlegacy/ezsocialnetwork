@@ -36,7 +36,7 @@ class StumbleUponAPI extends SocialRequest
      * @param  string $url [description]
      * @return [type]      [description]
      */
-    public static function countByUrl($parameters) {
+    public static function statsUrl($parameters) {
         $instanceStumbleUpon = new StumbleUponAPI();
         /**
          * This instance return an object JSON
@@ -71,16 +71,17 @@ class StumbleUponAPI extends SocialRequest
         $jsonString = $instanceStumbleUpon->request($instanceStumbleUpon->url("services/1.01/badge.getinfo"), $parameters);
         $json = json_decode($jsonString, true);
         /**
+         * 105      Unknown API Method
          * 9000     Service temporarily unavailable
          * 9020     Bad or missing parameter: url
          * 9030     Rate-limit exceeded
          * 9031     Rate-limit exceeded
          */
         if (isset($json['error_code'])) {
-            eZDebug::writeError( $json['error_message'] . ": ". $json['error_message'], 'StumbleUpon API' );
+            eZDebug::writeError( $json['error_code'] . ": ". $json['error_message'], 'StumbleUpon API' );
             return false;
         }
-        return isset($json['result']['views'])?intval($json['result']['views']):0;
+        return isset($json['result'])?$json['result']:0;
     }
 }
 

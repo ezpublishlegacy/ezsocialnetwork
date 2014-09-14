@@ -5,7 +5,7 @@
  * @author Dany Ralantonisainana <lendormi1984@gmail.com>
  */
 
-class GoogleAPI extends SocialRequest
+class GooglePlusAPI extends SocialRequest
 {
 	const VERSION = "v1";
     const HOST = 'https://clients6.google.com/';
@@ -25,7 +25,7 @@ class GoogleAPI extends SocialRequest
      * @return [type]         [description]
      */
     public function url($method) {
-        return GoogleAPI::HOST.$method;
+        return GooglePlusAPI::HOST.$method;
     }
 
     /**
@@ -35,8 +35,22 @@ class GoogleAPI extends SocialRequest
      * @param  string $url [description]
      * @return [type]      [description]
      */
-    public static function statsByUrl($parameters) {
-        $instanceGoogle = new GoogleAPI();
+    public static function statsUrl($parameters) {
+        $instanceGoogle = new GooglePlusAPI();
+        $request = array(
+            'method' => 'pos.plusones.get',
+            'id' => 'p',
+            'params' => array(
+                "nolog"   => true,
+                "id"      => rawurldecode($parameters['url']),
+                "source"  => "widget",
+                "userId"  => "@viewer",
+                "groupId" => "@self"
+            ),
+            "jsonrpc"    => "2.0",
+            "key"        => "p",
+            "apiVersion" => "v1"
+        );
         /**
          * This instance return an object JSON
          * @var count
@@ -44,7 +58,7 @@ class GoogleAPI extends SocialRequest
          * @var fCntPlusOne
          * @var url
          */
-        $jsonString = $instanceGoogle->request($instanceGoogle->url("rpc"), "[".json_encode($parameters)."]");
+        $jsonString = $instanceGoogle->request($instanceGoogle->url("rpc"), "[".json_encode($request)."]");
         $json = json_decode($jsonString, true);
         if (!$json) {
             eZDebug::writeError( "No Data", 'Google API' );

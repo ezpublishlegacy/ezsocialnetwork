@@ -15,10 +15,10 @@ class Facebook extends SocialModel
      * @return [type] [description]
      * @api
      */
-    public function countByUrl()
+
+    public function statsByUrlAndByApi()
     {
-        return FacebookAPI::linkGetStats(array(
-            'method' => 'links.getStats',
+        return FacebookAPI::statsUrl(array(
             'urls' => $this->urls,
             'format' => $this->json
         ));
@@ -28,33 +28,52 @@ class Facebook extends SocialModel
      * [shared description]
      * @param  [type] $url [description]
      * @return [type]      [description]
+     * @api
      */
-    public static function shared($urls)
+    public static function statsUrl($urls, $type = 'api')
     {
         if (!empty($urls) && is_string($urls)) {
             $facebook = new Facebook(array(
                 'urls' => $urls
             ));
-            $facebook->countByUrl();
+            switch (strtolower($type)) {
+                default:
+                case 'api':
+                    return $facebook->statsByUrlAndByApi();
+                    break;
+                case 'graph':
+                    return $facebook->statsByUrlAndByGraph();
+                    break;
+                case 'fql':
+                    return $facebook->statsByUrlAndByFQL();
+                    break;
+            }
         }
+        return false;
     }
 
-    public function totalCount() {
-        return FacebookGraph::likeCount(array(
+    /**
+     * [statsByUrlAndByGraph description]
+     * @return [type] [description]
+     */
+    public function statsByUrlAndByGraph()
+    {
+        return FacebookGraph::statsUrl(array(
             'urls' => $this->urls,
         ));
     }
 
-    public function countUrlStatsByFQl() {
-        if (is_array($this->url) && (count($this->url) > 1)) {
-            return FacebookFQL::statMultipleUrls(array(
-                'url' => $this->url,
-                'format' => $this->json
-            ));
-        } else {
-            return FacebookFQL::statOneUrl(array(
-                'url' => $this->url,
-                'format' => $this->json
+    /**
+     * [countUrlStatsByFQl description]
+     * @var  String $url
+     * @return [type] [description]
+     * @api
+     */
+    public function statsByUrlAndByFQL()
+    {
+        if ($this->urls) {
+            return FacebookFQL::statsUrl(array(
+                'urls' => $this->urls
             ));
         }
     }

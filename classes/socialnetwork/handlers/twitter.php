@@ -12,25 +12,26 @@ class Twitter extends SocialModel
     /**
      * [countSharesTweetByUrl description]
      * @return [type] [description]
-     * @api
      */
-    public function countSharesTweetByUrl()
+    public function statsByUrlAndByApi()
     {
-        return TwitterAPI::countSharesTweetByUrl($this->url);
+        return TwitterAPI::statsUrl($this->url);
     }
 
     /**
      * [shared description]
-     * @param  [type] $url [description]
+     * @param  String $url [description]
      * @return [type]      [description]
+     * @api
      */
-    public static function shared($url)
+    public static function statsUrl($url)
     {
         if (!empty($url) && is_string($url)) {
             $twitter = new Twitter(array(
                 'url' => $url
             ));
-            $twitter->countSharesTweetByUrl();
+            return $twitter->statsByUrlAndByApi();
         }
+        return false;
     }
 }

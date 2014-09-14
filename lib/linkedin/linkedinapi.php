@@ -38,7 +38,7 @@ class LinkedinAPI extends SocialRequest
      * @param  string $url [description]
      * @return [type]      [description]
      */
-    public static function countByUrl($parameters) {
+    public static function statsUrl($parameters) {
         $instanceLinkeding = new LinkedinAPI();
         /**
          * This instance return an object JSON
@@ -49,7 +49,7 @@ class LinkedinAPI extends SocialRequest
          */
         $jsonString = $instanceLinkeding->request($instanceLinkeding->url("countserv/count/share"), $parameters);
         $json = json_decode($jsonString, true);
-        return isset($json['count'])?intval($json['count']):0;
+        return isset($json['count'])?$json:0;
     }
 }
 

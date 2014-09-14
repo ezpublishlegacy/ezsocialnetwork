@@ -14,25 +14,27 @@ class Stumbleupon extends SocialModel
      * @return [type] [description]
      * @api
      */
-    public function countByUrl()
+    public function statsByUrlAndByApi()
     {
-        return StumbleUponAPI::countByUrl(array(
+        return StumbleUponAPI::statsUrl(array(
             'url' => $this->url
         ));
     }
 
     /**
      * [shared description]
-     * @param  [type] $url [description]
+     * @param  String $url [description]
      * @return [type]      [description]
+     * @api
      */
-    public static function shared($url)
+    public static function statsUrl($url)
     {
         if (!empty($url) && is_string($url)) {
-            $twitter = new Stumbleupon(array(
+            $stumbleupon = new Stumbleupon(array(
                 'url' => $url
             ));
-            $twitter->countByUrl();
+            return  $stumbleupon->statsByUrlAndByApi();
         }
+        return false;
     }
 }

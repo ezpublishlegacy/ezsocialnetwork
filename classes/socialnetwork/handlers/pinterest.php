@@ -15,9 +15,9 @@ class Pinterest extends SocialModel
      * @return [type] [description]
      * @api
      */
-    public function countByUrl()
+    public function statsByUrlAndByApi()
     {
-        return PinterestAPI::countByUrl(array(
+        return PinterestAPI::statsUrl(array(
             'url' => $this->url,
         ));
     }
@@ -26,14 +26,16 @@ class Pinterest extends SocialModel
      * [shared description]
      * @param  [type] $url [description]
      * @return [type]      [description]
+     * @api
      */
-    public static function shared($url)
+    public static function statsUrl($url)
     {
         if (!empty($url) && is_string($url)) {
-            $facebook = new Pinterest(array(
+            $pinterest = new Pinterest(array(
                 'url' => $url
             ));
-            $facebook->countByUrl();
+            return $pinterest->statsByUrlAndByApi();
         }
+        return false;
     }
 }

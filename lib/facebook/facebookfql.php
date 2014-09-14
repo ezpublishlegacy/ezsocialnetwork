@@ -29,34 +29,28 @@ class FacebookFQL extends SocialRequest
      *                $ids => url
      * @return [type]      [description]
      */
-    public static function statOneUrl($parameters) {
-        $instanceFacebook = new FacebookFQL();
-        $query  = " SELECT url, normalized_url, share_count, like_count,
-                    comment_count, total_count, comments_fbid, click_count
-                    FROM link_stat WHERE url = '".$parameters["url"]."'";
-        unset($parameters["url"]);
-        $parameters['query'] = urlencode($query);
-        $jsonString = $instanceFacebook->request($instanceFacebook->url('method/fql.query'), $parameters);
-
-        $json = json_decode($jsonString, true);
-        if (isset($json['error_code'])) {
-            eZDebug::writeError( $json['error_msg'] . ": ". $json['error_msg'], 'Facebook API' );
-            return false;
+    public static function statsUrl($parameters) {
+        $countUrl = 0;
+        if (isset($parameters["urls"])) {
+            $countUrl = substr_count($parameters["urls"], ',');
         }
-        return $json;
-    }
-
-    /**
-     * [statMultipleUrls description]
-     * @param  [type] $parameters [description]
-     * @return [type]             [description]
-     */
-    public static function statMultipleUrls($parameters) {
         $instanceFacebook = new FacebookFQL();
-        $query  = " SELECT url, normalized_url, share_count, like_count,
-                    comment_count, total_count, comments_fbid, click_count
-                    FROM link_stat WHERE url IN(".$parameters["url"].")";
-        unset($parameters["url"]);
+        $query  = " SELECT  url,
+                            normalized_url,
+                            share_count,
+                            like_count,
+                            comment_count,
+                            total_count,
+                            comments_fbid,
+                            click_count";
+        if ($countUrl > 1) {
+            $query  .= " FROM link_stat
+                WHERE url IN(".$parameters["urls"].")";
+        } else {
+            $query  .= " FROM link_stat
+                WHERE url = '".$parameters["urls"]."'";
+        }
+        unset($parameters["urls"]);
         $parameters['query'] = urlencode($query);
         $jsonString = $instanceFacebook->request($instanceFacebook->url('method/fql.query'), $parameters);
 

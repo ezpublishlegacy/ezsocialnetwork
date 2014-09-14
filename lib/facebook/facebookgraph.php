@@ -29,7 +29,7 @@ class FacebookGraph
      *                $ids => url
      * @return [type]      [description]
      */
-    public static function likeCount($parameters) {
+    public static function statsUrl($parameters) {
         $instanceFacebook = new FacebookGraph();
         $jsonString = $instanceFacebook->request($instanceFacebook->host(), $parameters);
         $json = json_decode($jsonString, true);

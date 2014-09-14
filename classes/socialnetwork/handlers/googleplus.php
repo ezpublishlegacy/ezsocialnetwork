@@ -15,21 +15,11 @@ class GooglePlus extends SocialModel
      * @return [type] [description]
      * @api
      */
-    public function countByUrl()
+
+    public function statsByUrlAndByApi()
     {
-        return GoogleAPI::statsByUrl(array(
-            'method' => 'pos.plusones.get',
-            'id' => 'p',
-            'params' => array(
-                "nolog"   => true,
-                "id"      => rawurldecode($this->url),
-                "source"  => "widget",
-                "userId"  => "@viewer",
-                "groupId" => "@self"
-            ),
-            "jsonrpc"    => "2.0",
-            "key"        => "p",
-            "apiVersion" => "v1"
+        return GooglePlusAPI::statsUrl(array(
+            'url' => $this->url
         ));
     }
 
@@ -37,14 +27,16 @@ class GooglePlus extends SocialModel
      * [shared description]
      * @param  [type] $url [description]
      * @return [type]      [description]
+     * @api
      */
-    public static function shared($urls)
+    public static function statsUrl($url)
     {
-        if (!empty($urls) && is_string($urls)) {
-            $facebook = new GooglePlus(array(
-                'urls' => $urls
+        if (!empty($url) && is_string($url)) {
+            $googleplus = new GooglePlus(array(
+                'url' => $url
             ));
-            $facebook->countByUrl();
+            return $googleplus->statsByUrlAndByApi();
         }
+        return false;
     }
 }

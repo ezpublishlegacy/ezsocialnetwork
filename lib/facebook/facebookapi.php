@@ -33,8 +33,9 @@ class FacebookAPI extends SocialRequest
      * @param  string $url [description]
      * @return [type]      [description]
      */
-    public static function linkGetStats($parameters) {
+    public static function statsUrl($parameters) {
         $instanceFacebook = new FacebookAPI();
+        $parameters['method'] = 'links.getStats';
         /**
          * This instance return an object JSON
          * @var count

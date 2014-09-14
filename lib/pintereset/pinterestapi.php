@@ -32,7 +32,7 @@ class PinterestAPI extends SocialRequest
      * @param  string $url [description]
      * @return [type]      [description]
      */
-    public static function countByUrl($parameters) {
+    public static function statsUrl($parameters) {
         $instanceLinkeding = new PinterestAPI();
         /**
          * This instance return an object JSON

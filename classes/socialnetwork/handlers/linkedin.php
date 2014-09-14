@@ -17,9 +17,9 @@ class Linkedin extends SocialModel
      * @return [type] [description]
      * @api
      */
-    public function countByUrl()
+    public function statsByUrlAndByApi()
     {
-        return LinkedinAPI::countByUrl(array(
+        return LinkedinAPI::statsUrl(array(
             'url' => $this->url,
             'format' => $this->json,
             'lang' => $this->lang,
@@ -32,13 +32,14 @@ class Linkedin extends SocialModel
      * @param  [type] $url [description]
      * @return [type]      [description]
      */
-    public static function shared($url)
+    public static function statsUrl($url)
     {
         if (!empty($url) && is_string($url)) {
-            $twitter = new Linkedin(array(
+            $linkedin = new Linkedin(array(
                 'url' => $url
             ));
-            $twitter->countByUrl();
+            return $linkedin->statsByUrlAndByApi();
         }
+        return false;
     }
 }

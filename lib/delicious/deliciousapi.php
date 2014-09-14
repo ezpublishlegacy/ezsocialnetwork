@@ -34,7 +34,7 @@ class DeliciousAPI extends SocialRequest
      * @param  string $url [description]
      * @return [type]      [description]
      */
-    public static function linkGetStats($parameters) {
+    public static function statsUrl($parameters) {
         $instanceDelicious = new DeliciousAPI();
         /**
          * This instance return an object JSON

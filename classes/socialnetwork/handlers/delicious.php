@@ -6,21 +6,19 @@
 
 class Delicious extends SocialModel
 {
-    public $urls = "";
+    public $url = "";
     public $timeout = 5;
     public $json = 'json';
 
     /**
      * [countSharesTweetByUrl description]
      * @return [type] [description]
-     * @api
      */
-    public function countByUrl()
+
+    public function statsByUrlAndByApi()
     {
-        return FacebookAPI::linkGetStats(array(
-            'method' => 'links.getStats',
-            'urls' => $this->urls,
-            'format' => $this->json
+        return DeliciousAPI::statsUrl(array(
+            'url' => $this->url
         ));
     }
 
@@ -28,14 +26,16 @@ class Delicious extends SocialModel
      * [shared description]
      * @param  [type] $url [description]
      * @return [type]      [description]
+     * @api
      */
-    public static function shared($urls)
+    public static function statsUrl($url)
     {
-        if (!empty($urls) && is_string($urls)) {
-            $facebook = new Facebook(array(
-                'urls' => $urls
+        if (!empty($url) && is_string($url)) {
+            $delicious = new Delicious(array(
+                'url' => $url
             ));
-            $facebook->countByUrl();
+            return $delicious->statsByUrlAndByApi();
         }
+        return false;
     }
 }
