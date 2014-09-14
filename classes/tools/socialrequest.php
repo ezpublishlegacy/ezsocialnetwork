@@ -36,9 +36,14 @@ class SocialRequest
      * @param  [type] $url [description]
      * @return [type]      [description]
      */
-
     public function call($url, $jsonPost)
     {
+        ezpEvent::getInstance()->filter('socialnetwork/sharecount',
+            array(
+                'social' => get_class($this),
+                'url' => $url,
+            )
+        );
         $curl = new CurlHttpClient($url);
         $curl->setOption($this->configCurl);
         if ($jsonPost) {
