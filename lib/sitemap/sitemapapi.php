@@ -46,5 +46,33 @@ class SitemapAPI extends SocialRequest
         }
         return $xmlSitemap;
     }
+
+    /**
+     * [getStatsOnAllSocialNetwork description]
+     * @param  SimpleXMLElement $xmlItem [description]
+     * @return [type]                    [description]
+     */
+    public static function getStatsOnAllSocialNetwork(SimpleXMLElement $xmlItem){
+        $itemUrl              = $xmlItem->loc;
+        $itemPriority         = $xmlItem->priority;
+        $itemFrequence        = $xmlItem->changefreq;
+        $itemLastModification = $xmlItem->lastmod;
+        return SocialRequest::requestAllSocialNetwork($itemUrl->__toString(), 'statsUrl');
+    }
+
+    /**
+     * [incrementXml description]
+     * @param  array  $xmlArray [description]
+     * @return [type]           [description]
+     */
+    public static function incrementXml($xmlArray = array()) {
+        if (count($xmlArray)) {
+            foreach ($xml->url as $xmlItem) {
+                $result = SitemapAPI::getStatsOnAllSocialNetwork($xmlItem);
+                //this pause avoid User Rate Limit Exceeded
+                sleep(10);
+            }
+        }
+    }
 }
 

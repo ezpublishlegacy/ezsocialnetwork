@@ -51,4 +51,25 @@ class SocialRequest
         }
         return $curl->getResponse();
     }
+
+    /**
+     * [requestAllSocialNetwork description]
+     * @return [type] [description]
+     */
+    public static function requestAllSocialNetwork($args, $method)
+    {
+        $socialINI = eZINI::instance('social.ini');
+        $statsUrl             = array();
+        if ($socialINI->hasVariable('SocialSettings', 'TypeHandler')) {
+            $socialHandlers = $socialINI->variable('SocialSettings', 'TypeHandler');
+            if (!empty($socialHandlers)) {
+                foreach ($socialHandlers as $socialHandler) {
+                    if (!empty($socialHandler) && class_exists($socialHandler) && method_exists($socialHandler, $method)) {
+                        $statsUrl[strtolower($socialHandler)] = call_user_func(array( $socialHandler, $method ), $args);
+                    }
+                }
+            }
+        }
+        return $statsUrl;
+    }
 }
