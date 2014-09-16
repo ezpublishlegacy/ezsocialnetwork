@@ -1,3 +1,8 @@
 License: See, LICENSE.txt
 
 ezdashboard is an extension with all library to manage and analyse your content
+
+// Add in dashboard.ini a website value
+[DashBoardSettings]
+ WebSite[]
+ This feature allow to have a lot website on this plateform

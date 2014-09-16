@@ -51,9 +51,15 @@ class eZDashBoard extends eZPersistentObject
                     'default' => '',
                     'required' => false
                 ),
-                "creator_object_id" => array(
+                "creator_id" => array(
                     'name' => 'Creator',
                     'datatype' => 'integer',
+                    'default' => '',
+                    'required' => false
+                ),
+                "author" => array(
+                    'name' => 'Author',
+                    'datatype' => 'string',
                     'default' => '',
                     'required' => false
                 ),
@@ -127,5 +133,22 @@ class eZDashBoard extends eZPersistentObject
             "name"                => "ezdashboard"
         );
         return $definition;
+    }
+
+    public static function create($name)
+    {
+        $ini = eZINI::instance();
+        $data = array(
+
+        );
+        return new eZDashBoardSite($data);
+    }
+
+    public static function fetchByName($name, $asObject = true)
+    {
+        return eZPersistentObject::fetchObject(eZDashBoardSite::definition(),
+                                                null,
+                                                array( 'LOWER( site )' => strtolower($name) ),
+                                                $asObject);
     }
 }

@@ -30,13 +30,13 @@ class eZDashBoardSite extends eZPersistentObject
                 "date_add" => array(
                     'name' => 'DateAdd',
                     'datatype' => 'integer',
-                    'default' => '',
+                    'default' => 0,
                     'required' => false
                 ),
                 "date_modified" => array(
                     'name' => 'DateModified',
                     'datatype' => 'integer',
-                    'default' => '',
+                    'default' => 0,
                     'required' => false
                 ),
             ),
@@ -49,5 +49,33 @@ class eZDashBoardSite extends eZPersistentObject
             "name"                => "ezdashboard_site"
         );
         return $definition;
+    }
+
+    public static function initialize()
+    {
+        $ini = eZINI::instance();
+        $siteName = $ini->variable('SiteSettings', 'SiteURL');
+        if (!eZDashBoardSite::fetchByName($siteName)) {
+            $ezdash = eZDashBoardSite::create($siteName);
+            $ezdash->store();
+        }
+    }
+
+    public static function create($name)
+    {
+        $data = array(
+            'site' => strtolower($name),
+            'date_add' => time(),
+            'date_modified' => time()
+        );
+        return new eZDashBoardSite($data);
+    }
+
+    public static function fetchByName($name, $asObject = true)
+    {
+        return eZPersistentObject::fetchObject(eZDashBoardSite::definition(),
+                                                null,
+                                                array( 'LOWER( site )' => strtolower($name) ),
+                                                $asObject);
     }
 }
