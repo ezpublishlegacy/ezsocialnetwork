@@ -40,12 +40,13 @@ if (count($nodes)) {
             $cli->output("Already existed");
             continue;
         }
-        $datamap                      = $node->dataMap();
-        $attributeData                = array();
-        $attributeData['name']        = $node->attribute('name');
-        $attributeData['url']         = $url;
-        $attributeData['hash_url']    = md5($url);
-        $attributeData['date_create'] = $node->object()->attribute("published");
+        $datamap                           = $node->dataMap();
+        $attributeData                     = array();
+        $attributeData['name']             = $node->attribute('name');
+        $attributeData['url']              = $url;
+        $attributeData['hash_url']         = md5($url);
+        $attributeData['date_create']      = $node->object()->attribute("published");
+        $attributeData['class_identifier'] = $node->attribute("class_identifier");
         foreach ($imageAttributeName as $key => $attributeName) {
             if (isset($datamap[$attributeName]) && $datamap[$attributeName]) {
                 $imageReference         = $datamap[$attributeName]->content()->imageAlias('reference');

@@ -45,6 +45,12 @@ class eZDashBoard extends eZPersistentObject
                     'default' => '',
                     'required' => false
                 ),
+                "class_identifier" => array(
+                    'name' => 'ClassIdentifier',
+                    'datatype' => 'string',
+                    'default' => '',
+                    'required' => false
+                ),
                 "image" => array(
                     'name' => 'Image',
                     'datatype' => 'string',
@@ -151,6 +157,7 @@ class eZDashBoard extends eZPersistentObject
             'url'             => $data['url'],
             'hash_url'        => $data['hash_url'],
             'date_create'     => $data['date_create'],
+            'class_identifier'=> $data['class_identifier'],
             'image'           => $data['image'],
             'date_add'        => time(),
             'date_modified'   => time()

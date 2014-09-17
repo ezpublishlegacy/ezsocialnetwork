@@ -4,6 +4,7 @@ CREATE TABLE `ezdashboard` (
     `name` varchar(255) NOT NULL,
     `url` varchar(255) NOT NULL,
     `hash_url` varchar(32) NOT NULL,
+    `class_identifier` varchar(32) NOT NULL,
     `image` varchar(255) NOT NULL,
     `ezpublishstats_id` int(11) NOT NULL,
     `delicious` int(6) NOT NULL,
