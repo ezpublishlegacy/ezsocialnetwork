@@ -105,17 +105,23 @@ class eZDashBoard extends eZPersistentObject
                     'default' => '',
                     'required' => false
                 ),
+                "date_create" => array(
+                    'name' => 'DateCreation',
+                    'datatype' => 'integer',
+                    'default' => 0,
+                    'required' => false
+                ),
                 "date_add" => array(
                     'name' => 'DateAdd',
                     'datatype' => 'integer',
-                    'default' => '',
+                    'default' => 0,
                     'required' => false
                 ),
                 "date_modified" => array(
                     'name' => 'DateModified',
                     'datatype' => 'integer',
                     'default' => '',
-                    'required' => false
+                    'required' => true
                 ),
             ),
             "keys"                => array( "id" ),
@@ -144,9 +150,10 @@ class eZDashBoard extends eZPersistentObject
             'name'            => $data['name'],
             'url'             => $data['url'],
             'hash_url'        => $data['hash_url'],
+            'date_create'     => $data['date_create'],
             'image'           => $data['image'],
             'date_add'        => time(),
-            'data_modified'   => time()
+            'date_modified'   => time()
         );
         return new eZDashBoard($attributeData);
     }

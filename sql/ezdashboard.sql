@@ -14,6 +14,7 @@ CREATE TABLE `ezdashboard` (
     `stumbleupon` int(6) NOT NULL,
     `twitter` int(6) NOT NULL,
     `pinterest` int(6) NOT NULL,
+    `date_create` int(11) NOT NULL,
     `date_add` int(11) NOT NULL,
     `date_modified` int(11) NOT NULL,
     PRIMARY KEY(id)

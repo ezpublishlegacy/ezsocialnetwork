@@ -40,14 +40,15 @@ if (count($nodes)) {
             $cli->output("Already existed");
             continue;
         }
-        $datamap = $node->dataMap();
-        $attributeData = array();
-        $attributeData['name'] = $node->attribute('name');
-        $attributeData['url'] = $url;
-        $attributeData['hash_url'] = md5($url);
+        $datamap                      = $node->dataMap();
+        $attributeData                = array();
+        $attributeData['name']        = $node->attribute('name');
+        $attributeData['url']         = $url;
+        $attributeData['hash_url']    = md5($url);
+        $attributeData['date_create'] = $node->object()->attribute("published");
         foreach ($imageAttributeName as $key => $attributeName) {
             if (isset($datamap[$attributeName]) && $datamap[$attributeName]) {
-                $imageReference = $datamap[$attributeName]->content()->imageAlias('reference');
+                $imageReference         = $datamap[$attributeName]->content()->imageAlias('reference');
                 $attributeData['image'] = $imageReference['url'];
                 break;
             }
@@ -57,13 +58,13 @@ if (count($nodes)) {
         $ezdash = eZDashBoard::create($attributeData);
         $ezdash->store();
 
-        // @todo this row is not standard
+        // @todo these rows are not standard
         $author = $datamap['authors']->content();
         $authorID = "";
         if (count($author['relation_list'])) {
             foreach ($author['relation_list'] as $key => $author) {
                 $objectAuthor = eZContentObject::fetch($author['contentobject_id']);
-                $authorName = trim(str_replace("  ", " ", $objectAuthor->attribute('name')));
+                $authorName   = trim(str_replace("  ", " ", $objectAuthor->attribute('name')));
                 $ezdashauthor = eZDashBoardAuthor::fetchByName($authorName);
                 if (!$ezdashauthor) {
                     $ezdashauthor = eZDashBoardAuthor::create($authorName);
