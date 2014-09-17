@@ -51,16 +51,10 @@ class eZDashBoard extends eZPersistentObject
                     'default' => '',
                     'required' => false
                 ),
-                "creator_id" => array(
-                    'name' => 'Creator',
+                "ezpublishstats_id" => array(
+                    'name' => 'eZ Publish Stats',
                     'datatype' => 'integer',
-                    'default' => '',
-                    'required' => false
-                ),
-                "author" => array(
-                    'name' => 'Author',
-                    'datatype' => 'string',
-                    'default' => '',
+                    'default' => 0,
                     'required' => false
                 ),
                 "delicious" => array(
@@ -135,20 +129,51 @@ class eZDashBoard extends eZPersistentObject
         return $definition;
     }
 
-    public static function create($name)
+
+    public static function create($data)
     {
         $ini = eZINI::instance();
-        $data = array(
-
+        $siteName = $ini->variable('SiteSettings', 'MainFrontHost');
+        $ezdashboardsite = eZDashBoardSite::fetchByName($siteName);
+        if (!$ezdashboardsite) {
+            eZDebug::writeError("This sitename $siteName didn't exist.", __METHOD__);
+            return false;
+        }
+        $attributeData = array(
+            'site_id'         => $ezdashboardsite->attribute('id'),
+            'name'            => $data['name'],
+            'url'             => $data['url'],
+            'hash_url'        => $data['hash_url'],
+            'image'           => $data['image'],
+            'date_add'        => time(),
+            'data_modified'   => time()
         );
-        return new eZDashBoardSite($data);
+        return new eZDashBoard($attributeData);
     }
 
-    public static function fetchByName($name, $asObject = true)
+    /**
+     * [fetchByUrl description]
+     * @param  [type] $url [description]
+     * @return [type]      [description]
+     */
+    public static function fetchByURL($url)
     {
-        return eZPersistentObject::fetchObject(eZDashBoardSite::definition(),
-                                                null,
-                                                array( 'LOWER( site )' => strtolower($name) ),
-                                                $asObject);
+        $row = eZPersistentObject::fetchObject(self::definition(), null, array('hash_url' => md5($url)));
+        if (!$row) {
+            return false;
+        }
+        return $row;
+    }
+
+    public function linkedToAuthor($authorID)
+    {
+        return eZDashBoard::storeDashBoardInAuthor($this->attribute('id'), $authorID);
+    }
+
+    public static function storeDashBoardInAuthor($dashboardID, $authorID)
+    {
+        $db = eZDB::instance();
+        return $db->query("INSERT INTO `ezdashboard_dashboard_author` (`dashboard_id`, `author_id`)
+                            VALUES ('".$dashboardID."', '".$authorID."');");
     }
 }
