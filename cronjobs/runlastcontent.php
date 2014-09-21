@@ -60,18 +60,20 @@ if (count($nodes)) {
         $ezdash->store();
 
         // @todo these rows are not standard
-        $author = $datamap['authors']->content();
-        $authorID = "";
-        if (count($author['relation_list'])) {
-            foreach ($author['relation_list'] as $key => $author) {
-                $objectAuthor = eZContentObject::fetch($author['contentobject_id']);
-                $authorName   = trim(str_replace("  ", " ", $objectAuthor->attribute('name')));
-                $ezdashauthor = eZDashBoardAuthor::fetchByName($authorName);
-                if (!$ezdashauthor) {
-                    $ezdashauthor = eZDashBoardAuthor::create($authorName);
-                    $ezdashauthor->store();
+        if (isset($datamap['authors'])  && $datamap['authors']->hasContent()) {
+            $author = $datamap['authors']->content();
+            $authorID = "";
+            if (count($author['relation_list'])) {
+                foreach ($author['relation_list'] as $key => $author) {
+                    $objectAuthor = eZContentObject::fetch($author['contentobject_id']);
+                    $authorName   = trim(str_replace("  ", " ", $objectAuthor->attribute('name')));
+                    $ezdashauthor = eZDashBoardAuthor::fetchByName($authorName);
+                    if (!$ezdashauthor) {
+                        $ezdashauthor = eZDashBoardAuthor::create($authorName);
+                        $ezdashauthor->store();
+                    }
+                    $ezdash->linkedToAuthor($ezdashauthor->attribute('id'));
                 }
-                $ezdash->linkedToAuthor($ezdashauthor->attribute('id'));
             }
         }
         $db->commit();
