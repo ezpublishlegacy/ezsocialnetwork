@@ -78,4 +78,12 @@ class eZDashBoardSite extends eZPersistentObject
                                                 array( 'LOWER( site )' => strtolower($name) ),
                                                 $asObject);
     }
+
+    public static function fetch($id, $asObject = null)
+    {
+        return eZPersistentObject::fetchObject(eZDashBoardSite::definition(),
+                                                null,
+                                                array( 'id' => $id ),
+                                                $asObject);
+    }
 }

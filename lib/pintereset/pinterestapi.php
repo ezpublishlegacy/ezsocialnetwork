@@ -33,14 +33,14 @@ class PinterestAPI extends SocialRequest
      * @return [type]      [description]
      */
     public static function statsUrl($parameters) {
-        $instanceLinkeding = new PinterestAPI();
+        $instancePinterest = new PinterestAPI();
         /**
          * This instance return an object JSON
          * @var count
          */
-        $jsonString = $instanceLinkeding->request($instanceLinkeding->url("v1/urls/count.json"), $parameters);
-        $jsonString = preg_replace('/^receiveCount((.*))$/', "\1", $jsonString);
-        $json = json_decode($jsonString, true);
+        $jsonString = $instancePinterest->request($instancePinterest->url("v1/urls/count.json"), $parameters);
+        $jsonString = preg_replace("/^receiveCount\((.*)\)$/", "$1", $jsonString);
+        $json       = json_decode($jsonString, true);
         if (isset($json['error'])) {
             eZDebug::writeError( $json['error'], 'Pinterest API' );
             return false;

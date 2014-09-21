@@ -6,3 +6,10 @@ ezdashboard is an extension with all library to manage and analyse your content
 [DashBoardSettings]
  WebSite[]
  This feature allow to have a lot website on this plateform
+
+Apache
+RewriteRule ^/extension/ezdashboard/tests/.* - [L]
+
+Root
+/usr/bin/php5 extension/ezdashboard/bin/php/initializedata.php
+

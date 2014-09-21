@@ -34,8 +34,8 @@ $nodes = eZContentObjectTreeNode::subTreeByNodeID($params, $rootNode);
 $cli->output("There are ". count($nodes). " nodes");
 if (count($nodes)) {
     foreach ($nodes as $key => $node) {
-        $cli->output("Working on this content ". $url);
         $url = $node->urlAlias();
+        $cli->output("Working on this content ". $url);
         if (eZDashBoard::fetchByURL($url)) {
             $cli->output("Already existed");
             continue;

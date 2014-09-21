@@ -50,4 +50,23 @@ class eZDashBoardGoogle extends eZPersistentObject
         );
         return $definition;
     }
+
+    public static function create($data)
+    {
+        $attributeData = array(
+            "count"         => (isset($data['result']['metadata']['globalCounts']['count']) ? $data['result']['metadata']['globalCounts']['count'] : $data),
+            "date_add"      => time(),
+            "date_modified" => time()
+        );
+        return new eZDashBoardGoogle($attributeData);
+    }
+
+    public static function fetch($id)
+    {
+        $row = eZPersistentObject::fetchObject(eZDashBoardGoogle::definition(), null, array('id' => $id));
+        if (!$row) {
+            return false;
+        }
+        return $row;
+    }
 }
