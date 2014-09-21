@@ -36,20 +36,28 @@ class SocialRequest
      * @param  [type] $url [description]
      * @return [type]      [description]
      */
+
     public function call($url, $jsonPost)
     {
+        $dashboardINI = eZINI::instance('dashboard.ini');
         ezpEvent::getInstance()->filter('socialnetwork/sharecount',
             array(
                 'social' => get_class($this),
                 'url' => $url,
             )
         );
-        $curl = new CurlHttpClient($url);
-        $curl->setOption($this->configCurl);
-        if ($jsonPost) {
-            $curl->setOption(array(CURLOPT_POSTFIELDS => $jsonPost));
+        if ($dashboardINI->variable('DashBoardSettings', 'DevelopmentMode') === 'enabled') {
+            $data['pack_level'] = 0;
+            $class = strtolower(get_class($this));
+            return file_get_contents('extension/ezdashboard/tests/'.$class.'.json');
+        } else {
+            $curl = new CurlHttpClient($url);
+            $curl->setOption($this->configCurl);
+            if ($jsonPost) {
+                $curl->setOption(array(CURLOPT_POSTFIELDS => $jsonPost));
+            }
+            return $curl->getResponse();
         }
-        return $curl->getResponse();
     }
 
     /**
