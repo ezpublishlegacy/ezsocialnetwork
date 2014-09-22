@@ -46,26 +46,40 @@ class eZDashBoardeZPublishStats extends eZPersistentObject
             "increment_key"       => "id",
             "class_name"          => "eZDashBoardeZPublishStats",
             "sort"                => array( "id" => "asc" ),
-            "name"                => "ezdashboard_site"
+            "name"                => "ezdashboard_ezpublish"
         );
         return $definition;
     }
 
-    public static function create($name)
+    public static function create($count)
     {
         $data = array(
-            'visit_count' => strtolower($name),
+            'visit_count' => $count,
             'date_add' => time(),
             'date_modified' => time()
         );
         return new eZDashBoardeZPublishStats($data);
     }
 
-    public static function fetch($id, $asObject = null)
+
+    public static function fetch($id, $asObject = true)
     {
         return eZPersistentObject::fetchObject(eZDashBoardeZPublishStats::definition(),
                                                 null,
                                                 array( 'id' => $id ),
                                                 $asObject);
+    }
+
+    public static function statsUrl($url)
+    {
+        $dashboardIni = eZINI::instance('dashboard.ini');
+        eZURLAliasML::translate($url);
+        $urlArray = explode('/', $url);
+        $nodeArray = eZContentObjectTreeNode::fetch(end($urlArray), false, false);
+        if ($dashboardIni->hasVariable('DashBoardSettings', 'eZPublishCounterHandler') && $nodeArray) {
+            $ezCountHandler = $dashboardIni->variable('DashBoardSettings', 'eZPublishCounterHandler');
+            return $ezCountHandler::fetch($nodeArray['contentobject_id'], false);
+        }
+        return false;
     }
 }

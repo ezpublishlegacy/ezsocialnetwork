@@ -138,6 +138,7 @@ class eZDashBoard extends eZPersistentObject
                 "linkedin"    => "getLinkedin",
                 "pinterest"   => "getPinterest",
                 "stumbleupon" => "getStumbleupon",
+                "ezpublish"   => "getEzpublish",
                 "twitter"     => "getTwitter"
             ),
             "set_functions" => array(
@@ -147,6 +148,7 @@ class eZDashBoard extends eZPersistentObject
                 "linkedin"    => "setLinkedin",
                 "pinterest"   => "setPinterest",
                 "stumbleupon" => "setStumbleupon",
+                "ezpublish"   => "setEzpublish",
                 "twitter"     => "setTwitter"
             ),
             "increment_key"       => "id",
@@ -323,6 +325,42 @@ class eZDashBoard extends eZPersistentObject
     }
 
     /**
+     * [getEzpublish description]
+     * @return [type] [description]
+     * @api
+     */
+    public function getEzpublish()
+    {
+        if (!isset($this->ezpublish)) {
+            $this->ezpublish = eZDashBoardeZPublishStats::fetch($this->attribute("ezpublishstats_id"));
+        }
+        return $this->ezpublish;
+    }
+
+    /**
+     * [setEzpublish description]
+     * @param [type] $ezpublish [description]
+     */
+    public function setEzpublish($data)
+    {
+        if (isset($data[0]) && is_array($data[0])) {
+            $data = $data[0];
+        }
+        if ($this->attribute('ezpublishstats_id')) {
+            $ezpublish = eZDashBoardeZPublishStats::fetch($this->attribute('ezpublishstats_id'));
+            $ezpublish->setAttribute('visit_count', $data['count']);
+            $ezpublish->setAttribute('date_modified', time());
+        } else {
+            $ezpublish = eZDashBoardeZPublishStats::create($data['count']);
+        }
+        if (!($ezpublish instanceof eZDashBoardeZPublishStats)) {
+            eZDebug::writeError("Undefined attribute ezpublish, cannot set",
+                                 "eZDashBoardeZPublishStats");
+        }
+        $this->ezpublish = $ezpublish;
+    }
+
+    /**
      * [getDelicious description]
      * @return [type] [description]
      * @api
@@ -451,6 +489,12 @@ class eZDashBoard extends eZPersistentObject
                         }
                     }
                 }
+            }
+        }
+        if (isset($this->ezpublish) && $this->ezpublish) {
+            $this->ezpublish->store();
+            if (!$this->attribute('ezpublishstats_id')) {
+                $this->setAttribute('ezpublishstats_id', $this->ezpublish->attribute('id'));
             }
         }
         eZPersistentObject::store($fieldFilters);

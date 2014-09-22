@@ -5,6 +5,8 @@
  */
 
 $cli->output("Prepare to update all data social network on this eZ Publish...");
+
+$dashboardIni = eZINI::instance('dashboard.ini');
 $ezdashs = eZDashBoard::fetchListByTime('-6 months');
 if ($ezdashs) {
     foreach ($ezdashs as $key => $ezdashID) {
@@ -17,6 +19,12 @@ if ($ezdashs) {
                 $ezdashboard->setAttribute($attribute, $data);
             }
         }
+        
+        if ($dashboardIni->hasVariable('DashBoardSettings', 'eZPublishHandler')) {
+            $ezHandler = $dashboardIni->variable('DashBoardSettings', 'eZPublishHandler');
+            $ezdashboard->setAttribute('ezpublish', $ezHandler::statsUrl($ezdashboard->attribute('url')));
+        }
+        $ezdashboard->setAttribute('date_modified', time());
         $ezdashboard->store();
         // User Rate Limit Exceeded hack
         sleep(10);
