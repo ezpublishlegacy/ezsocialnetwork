@@ -21,7 +21,7 @@ $params = array(
     'Depth'            => false,
     'Limitation'       => array(),
     'LoadDataMap'      => false,
-    'SortBy'           => array( 'published', false ),
+    'SortBy'           => array( 'published', true ),
     'AttributeFilter'  => array(
         'and',
         array( 'published', '>', $aftertytime ),
