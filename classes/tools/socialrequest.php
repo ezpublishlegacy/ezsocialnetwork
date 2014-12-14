@@ -54,7 +54,10 @@ class SocialRequest
             $curl = new CurlHttpClient($url);
             $curl->setOption($this->configCurl);
             if ($jsonPost) {
-                $curl->setOption(array(CURLOPT_POSTFIELDS => $jsonPost));
+                $curl->setOption(array(
+                    CURLOPT_POSTFIELDS => $jsonPost,
+                    CURLOPT_USERAGENT  => $dashboardINI->variable( 'DashBoardSettings', 'UserAgent' )
+                ));
             }
             return $curl->getResponse();
         }
