@@ -26,11 +26,14 @@ $websites = $dashboardIni->variable('DashBoardSettings', 'WebSite');
 
 $cli->output("Going to create row in dashboard_site\n");
 
+
 foreach ($websites as $website) {
-    if (!eZDashBoardSite::fetchByName($website)) {
+    if (!empty($website) && !eZDashBoardSite::fetchByName($website)) {
         $ezdash = eZDashBoardSite::create($website);
         $ezdash->store();
         $cli->output("$website is created\n");
+    } else {
+        $cli->error("not created\n");
     }
 }
 

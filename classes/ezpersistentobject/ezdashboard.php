@@ -131,7 +131,7 @@ class eZDashBoard extends eZPersistentObject
                 ),
             ),
             "keys"            => array( "id" ),
-            "function_attsetDeliciousributes" => array(
+            "function_attributes" => array(
                 "delicious"   => "getDelicious",
                 "facebook"    => "getFacebook",
                 "googleplus"  => "getGoogleplus",

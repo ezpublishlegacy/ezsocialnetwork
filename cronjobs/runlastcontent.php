@@ -60,8 +60,8 @@ if (count($nodes)) {
         $ezdash->store();
 
         // @todo these rows are not standard
-        if (isset($datamap['authors'])  && $datamap['authors']->hasContent()) {
-            $author = $datamap['authors']->content();
+        if (isset($datamap['author'])  && $datamap['author']->hasContent()) {
+            $author = $datamap['author']->content();
             $authorID = "";
             if (count($author['relation_list'])) {
                 foreach ($author['relation_list'] as $key => $author) {
