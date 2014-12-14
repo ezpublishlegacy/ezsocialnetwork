@@ -86,4 +86,14 @@ class eZDashBoardSite extends eZPersistentObject
                                                 array( 'id' => $id ),
                                                 $asObject);
     }
+
+    /*!
+     Fetches a list of nodes and returns it.
+    */
+    public static function fetchList()
+    {
+        $sql = "SELECT * FROM ezdashboard_site ORDER BY id ASC";
+        $db = eZDB::instance();
+        return $db->arrayQuery($sql, array());
+    }
 }

@@ -12,5 +12,15 @@ $ViewList[''] = array( 'functions' => array( 'admin' ),
                        'script' => 'index.php'
 );
 
+$ViewList['list'] = array( 'functions' => array( 'admin' ),
+                       'script' => 'list.php'
+);
+
+$ViewList['data'] = array(
+    'functions' => array( 'admin' ),
+   'script'     => 'data.php',
+   'params'     => array( 'Type' )
+);
+
 $FunctionList = array();
 $FunctionList['admin'] = array();

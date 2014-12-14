@@ -500,4 +500,21 @@ class eZDashBoard extends eZPersistentObject
         eZPersistentObject::store($fieldFilters);
         $db->commit();
     }
+
+    /*!
+     Fetches a list of nodes and returns it. Offset and limitation can be set if needed.
+    */
+    public static function fetchList($offset = false, $limit = false)
+    {
+        $sql = "SELECT * FROM ezdashboard ORDER BY date_add DESC";
+        $parameters = array();
+        if ($offset !== false) {
+            $parameters['offset'] = $offset;
+        }
+        if ($limit !== false) {
+            $parameters['limit'] = $limit;
+        }
+        $db = eZDB::instance();
+        return $db->arrayQuery($sql, $parameters);
+    }
 }
