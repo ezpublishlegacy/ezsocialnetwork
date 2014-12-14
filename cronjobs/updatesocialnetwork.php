@@ -27,7 +27,7 @@ if ($ezdashs) {
         $ezdashboard->setAttribute('date_modified', time());
         $ezdashboard->store();
         // User Rate Limit Exceeded hack
-        sleep(10);
+        sleep($dashboardIni->variable('DashBoardSettings', 'UserRateLimit'));
     }
 }
 $cli->output("All data updated !!!");

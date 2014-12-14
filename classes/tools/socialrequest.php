@@ -56,7 +56,7 @@ class SocialRequest
             if ($jsonPost) {
                 $curl->setOption(array(
                     CURLOPT_POSTFIELDS => $jsonPost,
-                    CURLOPT_USERAGENT  => $dashboardINI->variable( 'DashBoardSettings', 'UserAgent' )
+                    CURLOPT_USERAGENT  => $dashboardINI->variable('DashBoardSettings', 'UserAgent')
                 ));
             }
             return $curl->getResponse();
