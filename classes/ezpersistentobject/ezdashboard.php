@@ -225,8 +225,11 @@ class eZDashBoard extends eZPersistentObject
                                                     array('id'),
                                                     array(
                                                         'date_create' => array('>', $time)
+
                                                     ),
-                                                    null,
+                                                    array(
+                                                        'date_modified' => 'DESC'
+                                                    ),
                                                     null,
                                                     null);
         if (!$result) {
