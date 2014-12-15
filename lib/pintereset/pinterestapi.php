@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ * Pintereset : immense pense-bete (photos, contenus, do it yourself)
  * @licence http://www.gnu.org/licenses/gpl-2.0.txt GNU GPLv2
  * @author Dany Ralantonisainana <lendormi1984@gmail.com>
  */
