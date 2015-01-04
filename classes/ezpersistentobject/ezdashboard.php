@@ -159,7 +159,6 @@ class eZDashBoard extends eZPersistentObject
         return $definition;
     }
 
-
     public static function create($data)
     {
         $ini = eZINI::instance();
@@ -221,17 +220,19 @@ class eZDashBoard extends eZPersistentObject
     public static function fetchListByTime($strtotime)
     {
         $time = strtotime($strtotime);
-        $result = eZPersistentObject::fetchObjectList(eZDashBoard::definition(),
-                                                    array('id'),
-                                                    array(
-                                                        'date_create' => array('>', $time)
 
-                                                    ),
-                                                    array(
-                                                        'date_modified' => 'DESC'
-                                                    ),
-                                                    null,
-                                                    null);
+        $result = eZPersistentObject::fetchObjectList(
+            eZDashBoard::definition(),
+            array('id'),
+            array(
+                'date_create' => array('>', $time)
+            ),
+            array(
+                'date_modified' => 'DESC'
+            ),
+            null,
+            null
+        );
         if (!$result) {
             return false;
         }
@@ -285,8 +286,10 @@ class eZDashBoard extends eZPersistentObject
             $facebook = eZDashBoardFacebook::create($data);
         }
         if (!($facebook instanceof eZDashBoardFacebook)) {
-            eZDebug::writeError("Undefined attribute facebook, cannot set",
-                                 "eZDashBoardFacebook");
+            eZDebug::writeError(
+                "Undefined attribute facebook, cannot set",
+                "eZDashBoardFacebook"
+            );
         }
         $this->facebook = $facebook;
     }
@@ -321,8 +324,10 @@ class eZDashBoard extends eZPersistentObject
             $googleplus = eZDashBoardGoogle::create($data);
         }
         if (!($googleplus instanceof eZDashBoardGoogle)) {
-            eZDebug::writeError("Undefined attribute google, cannot set",
-                                 "eZDashBoardGoogle");
+            eZDebug::writeError(
+                "Undefined attribute google, cannot set",
+                "eZDashBoardGoogle"
+            );
         }
         $this->googleplus = $googleplus;
     }
@@ -357,8 +362,10 @@ class eZDashBoard extends eZPersistentObject
             $ezpublish = eZDashBoardeZPublishStats::create($data['count']);
         }
         if (!($ezpublish instanceof eZDashBoardeZPublishStats)) {
-            eZDebug::writeError("Undefined attribute ezpublish, cannot set",
-                                 "eZDashBoardeZPublishStats");
+            eZDebug::writeError(
+                "Undefined attribute ezpublish, cannot set",
+                "eZDashBoardeZPublishStats"
+            );
         }
         $this->ezpublish = $ezpublish;
     }
@@ -478,6 +485,7 @@ class eZDashBoard extends eZPersistentObject
     {
         $db = eZDB::instance();
         $socialINI = eZINI::instance('social.ini');
+
         $db->begin();
         if ($socialINI->hasVariable('SocialSettings', 'TypeHandler')) {
             $socialHandlers = $socialINI->variable('SocialSettings', 'TypeHandler');
@@ -509,7 +517,10 @@ class eZDashBoard extends eZPersistentObject
     */
     public static function fetchList($offset = false, $limit = false)
     {
-        $sql = "SELECT * FROM ezdashboard ORDER BY date_add DESC";
+        $sql = "SELECT ezd.*, ezda.name as author FROM ezdashboard as ezd
+                LEFT JOIN ezdashboard_dashboard_author as ezdda on (ezd.id = ezdda.dashboard_id)
+                LEFT JOIN ezdashboard_author as ezda on (ezdda.author_id = ezda.id)
+                ORDER BY date_add DESC";
         $parameters = array();
         if ($offset !== false) {
             $parameters['offset'] = $offset;

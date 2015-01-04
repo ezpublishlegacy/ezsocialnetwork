@@ -61,13 +61,14 @@ class eZDashBoardeZPublishStats extends eZPersistentObject
         return new eZDashBoardeZPublishStats($data);
     }
 
-
     public static function fetch($id, $asObject = true)
     {
-        return eZPersistentObject::fetchObject(eZDashBoardeZPublishStats::definition(),
-                                                null,
-                                                array( 'id' => $id ),
-                                                $asObject);
+        return eZPersistentObject::fetchObject(
+            eZDashBoardeZPublishStats::definition(),
+            null,
+            array( 'id' => $id ),
+            $asObject
+        );
     }
 
     public static function statsUrl($url)

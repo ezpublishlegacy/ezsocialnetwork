@@ -14,7 +14,6 @@ class Delicious extends SocialModel
      * [countSharesTweetByUrl description]
      * @return [type] [description]
      */
-
     public function statsByUrlAndByApi()
     {
         return DeliciousAPI::statsUrl(array(

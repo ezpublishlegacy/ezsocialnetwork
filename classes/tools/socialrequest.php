@@ -36,7 +36,6 @@ class SocialRequest
      * @param  [type] $url [description]
      * @return [type]      [description]
      */
-
     public function call($url, $jsonPost)
     {
         $dashboardINI = eZINI::instance('dashboard.ini');
@@ -70,7 +69,7 @@ class SocialRequest
     public static function requestAllSocialNetwork($args, $method)
     {
         $socialINI = eZINI::instance('social.ini');
-        $statsUrl             = array();
+        $statsUrl  = array();
         if ($socialINI->hasVariable('SocialSettings', 'TypeHandler')) {
             $socialHandlers = $socialINI->variable('SocialSettings', 'TypeHandler');
             if (!empty($socialHandlers)) {

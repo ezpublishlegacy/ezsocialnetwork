@@ -15,7 +15,6 @@ class GooglePlus extends SocialModel
      * @return [type] [description]
      * @api
      */
-
     public function statsByUrlAndByApi()
     {
         return GooglePlusAPI::statsUrl(array(

@@ -7,7 +7,7 @@
 $cli->output("Prepare to update all data social network on this eZ Publish...");
 
 $dashboardIni = eZINI::instance('dashboard.ini');
-$ezdashs = eZDashBoard::fetchListByTime('-6 months');
+$ezdashs = eZDashBoard::fetchListByTime('-1 month');
 if ($ezdashs) {
     foreach ($ezdashs as $key => $ezdashID) {
         $ezdashboard = eZDashBoard::fetch($ezdashID);
