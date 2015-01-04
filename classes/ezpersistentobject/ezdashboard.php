@@ -217,6 +217,29 @@ class eZDashBoard extends eZPersistentObject
                             VALUES ('".$dashboardID."', '".$authorID."');");
     }
 
+    public function getAuthor($asObject = true)
+    {
+        $db = eZDB::instance();
+        $result = $db->arrayQuery(
+            "SELECT
+                ezda.id,
+                ezda.name,
+                ezda.date_add,
+                ezda.date_modified
+            FROM ezdashboard as ezd
+            LEFT JOIN ezdashboard_dashboard_author as ezdda on (ezd.id = ezdda.dashboard_id)
+            LEFT JOIN ezdashboard_author as ezda on (ezdda.author_id = ezda.id)
+            WHERE ezd.id = '".$this->attribute('hash_url')."'"
+        );
+        if (!$result) {
+            return false;
+        }
+        if (!$asObject) {
+            return $result[0];
+        }
+        return new eZDashBoardAuthor($result[0]);
+    }
+
     public static function fetchListByTime($strtotime)
     {
         $time = strtotime($strtotime);
@@ -530,5 +553,61 @@ class eZDashBoard extends eZPersistentObject
         }
         $db = eZDB::instance();
         return $db->arrayQuery($sql, $parameters);
+    }
+
+    /**
+     * Build all stats by social network
+     * @param  string                   $uri [description]
+     * @return array                    stats facebook, twitter ...
+     * @date   2015-01-04T16:49:03+0100
+     */
+    public static function getStats($uri)
+    {
+        $social      = eZDashBoard::fetchByURL($uri);
+        $author      = $social->getAuthor();
+        $facebook    = $social->getFacebook();
+        $googleplus  = $social->getGoogleplus();
+        $ezpublish   = $social->getEzpublish();
+        $delicious   = $social->getDelicious();
+        $linkedin    = $social->getLinkedin();
+        $pinterest   = $social->getPinterest();
+        $stumbleupon = $social->getStumbleupon();
+        $twitter     = $social->getTwitter();
+
+        //count
+        $count           = 0;
+        $facebookCount   = 0;
+        $googlePlusCount = 0;
+        $eZpublishCount  = 0;
+        if ($facebook) {
+            $facebookCount = $facebook->attribute('total_count');
+            $count         += $facebookCount;
+        }
+        if ($googleplus) {
+            $googlePlusCount = $googleplus->attribute('count');
+            $count           += $googlePlusCount;
+        }
+        if ($ezpublish) {
+            $eZpublishCount = $ezpublish->attribute('visit_count');
+            // $count       += $eZpublishCount;
+        }
+        $count += $delicious;
+        $count += $linkedin;
+        $count += $pinterest;
+        $count += $stumbleupon;
+        $count += $twitter;
+
+        return array(
+            'author'      => ($author ? $author->attribute('name') : ""),
+            'facebook'    => $facebookCount,
+            'googleplus'  => $googlePlusCount,
+            'ezpublish'   => $eZpublishCount,
+            'delicious'   => $delicious,
+            'linkedin'    => $linkedin,
+            'pinterest'   => $pinterest,
+            'stumbleupon' => $stumbleupon,
+            'twitter'     => $twitter,
+            'total'       => $count
+        );
     }
 }
