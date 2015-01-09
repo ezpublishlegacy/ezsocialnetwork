@@ -6,11 +6,11 @@
 
 $cli->output("Prepare to update all data social network on this eZ Publish...");
 
-$dashboardIni = eZINI::instance('dashboard.ini');
-$ezdashs = eZDashBoard::fetchListByTime('-1 month');
+$socialNetworkINI = eZINI::instance('socialnetwork.ini');
+$ezdashs = eZSocialNetwork::fetchListByTime('-1 month');
 if ($ezdashs) {
     foreach ($ezdashs as $key => $ezdashID) {
-        $ezdashboard = eZDashBoard::fetch($ezdashID);
+        $ezdashboard = eZSocialNetwork::fetch($ezdashID);
         $url = $ezdashboard->getURL();
         $cli->output("Working on this content ". $url);
         $dataSocial = SocialRequest::requestAllSocialNetwork($url, 'statsUrl');
@@ -20,14 +20,14 @@ if ($ezdashs) {
             }
         }
         
-        if ($dashboardIni->hasVariable('DashBoardSettings', 'eZPublishHandler')) {
-            $ezHandler = $dashboardIni->variable('DashBoardSettings', 'eZPublishHandler');
+        if ($socialNetworkINI->hasVariable('SocialNetworkSettings', 'eZPublishHandler')) {
+            $ezHandler = $socialNetworkINI->variable('SocialNetworkSettings', 'eZPublishHandler');
             $ezdashboard->setAttribute('ezpublish', $ezHandler::statsUrl($ezdashboard->attribute('url')));
         }
         $ezdashboard->setAttribute('date_modified', time());
         $ezdashboard->store();
         // User Rate Limit Exceeded hack
-        sleep($dashboardIni->variable('DashBoardSettings', 'UserRateLimit'));
+        sleep($socialNetworkINI->variable('SocialNetworkSettings', 'UserRateLimit'));
     }
 }
 $cli->output("All data updated !!!");

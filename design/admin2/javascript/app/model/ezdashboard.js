@@ -13,6 +13,7 @@ Ext.define('eZDashBoard',{
         "url",
         "class_identifier",
         "image",
+        "author",
         {
             name: "date_create",
             type: 'date',

@@ -1,11 +1,11 @@
 <?php
 /**
- * File containing the {@link eZDashBoardSite} class
+ * File containing the {@link eZSocialNetworkAuthor} class
  *
  * @license GNU General Public License v2.0
  * @author Dany Ralantonisainana <lendormi1984@gmail.com>
  */
-class eZDashBoardSite extends eZPersistentObject
+class eZSocialNetworkAuthor extends eZPersistentObject
 {
     public function __construct($row)
     {
@@ -21,7 +21,7 @@ class eZDashBoardSite extends eZPersistentObject
                     'datatype' => 'integer',
                     'required' => true
                 ),
-                "site" => array(
+                "name" => array(
                     'name' => 'Site',
                     'datatype' => 'string',
                     'default' => '',
@@ -44,56 +44,32 @@ class eZDashBoardSite extends eZPersistentObject
             "function_attributes" => array(
             ),
             "increment_key"       => "id",
-            "class_name"          => "eZDashBoardSite",
+            "class_name"          => "eZSocialNetworkAuthor",
             "sort"                => array( "id" => "asc" ),
-            "name"                => "ezdashboard_site"
+            "name"                => "ezdashboard_author"
         );
         return $definition;
-    }
-
-    public static function initialize()
-    {
-        $ini = eZINI::instance();
-        $siteName = $ini->variable('SiteSettings', 'SiteURL');
-        if (!eZDashBoardSite::fetchByName($siteName)) {
-            $ezdash = eZDashBoardSite::create($siteName);
-            $ezdash->store();
-        }
     }
 
     public static function create($name)
     {
         $data = array(
-            'site' => strtolower($name),
+            'name' => $name,
             'date_add' => time(),
             'date_modified' => time()
         );
-        return new eZDashBoardSite($data);
+        return new eZSocialNetworkAuthor($data);
     }
 
     public static function fetchByName($name, $asObject = true)
     {
-        return eZPersistentObject::fetchObject(eZDashBoardSite::definition(),
+<<<<<<< HEAD:classes/ezpersistentobject/ezdashboard_author.php
+        return eZPersistentObject::fetchObject(eZDashBoardAuthor::definition(),
+=======
+        return eZPersistentObject::fetchObject(eZSocialNetworkAuthor::definition(),
+>>>>>>> [SocialNetwor] rename all extension files:classes/ezpersistentobject/ezsocialnetwork_author.php
                                                 null,
-                                                array( 'LOWER( site )' => strtolower($name) ),
+                                                array( 'name' => $name),
                                                 $asObject);
-    }
-
-    public static function fetch($id, $asObject = null)
-    {
-        return eZPersistentObject::fetchObject(eZDashBoardSite::definition(),
-                                                null,
-                                                array( 'id' => $id ),
-                                                $asObject);
-    }
-
-    /*!
-     Fetches a list of nodes and returns it.
-    */
-    public static function fetchList()
-    {
-        $sql = "SELECT * FROM ezdashboard_site ORDER BY id ASC";
-        $db = eZDB::instance();
-        return $db->arrayQuery($sql, array());
     }
 }

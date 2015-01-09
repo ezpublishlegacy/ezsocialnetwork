@@ -8,7 +8,7 @@ class eZSocialCollectionFunction
 {
     public static function fetchByURL($url)
     {
-        $result = array( 'result' => eZDashBoard::fetchByURL($url) );
+        $result = array( 'result' => eZSocialNetwork::fetchByURL($url) );
         return $result;
     }
 }

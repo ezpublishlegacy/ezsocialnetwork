@@ -1,7 +1,7 @@
 <?php /*
 
 [CronjobSettings]
-ExtensionDirectories[]=ezdashboard
+ExtensionDirectories[]=ezsocialnetwork
 
 [CronjobPart-lastcontent]
 Scripts[]

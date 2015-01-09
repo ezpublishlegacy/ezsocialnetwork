@@ -1,11 +1,11 @@
 <?php
 /**
- * File containing the {@link eZDashBoardFacebook} class
+ * File containing the {@link eZSocialNetworkFacebook} class
  *
  * @license GNU General Public License v2.0
  * @author Dany Ralantonisainana <lendormi1984@gmail.com>
  */
-class eZDashBoardFacebook extends eZPersistentObject
+class eZSocialNetworkFacebook extends eZPersistentObject
 {
     public function __construct($row)
     {
@@ -74,7 +74,7 @@ class eZDashBoardFacebook extends eZPersistentObject
             "function_attributes" => array(
             ),
             "increment_key"       => "id",
-            "class_name"          => "eZDashBoardFacebook",
+            "class_name"          => "eZSocialNetworkFacebook",
             "sort"                => array( "id" => "asc" ),
             "name"                => "ezdashboard_facebook"
         );
@@ -93,7 +93,7 @@ class eZDashBoardFacebook extends eZPersistentObject
             "date_add"          => time(),
             "date_modified"     => time()
         );
-        return new eZDashBoardFacebook($attributeData);
+        return new eZSocialNetworkFacebook($attributeData);
     }
 
     public function fillData($row)
@@ -114,7 +114,11 @@ class eZDashBoardFacebook extends eZPersistentObject
 
     public static function fetch($id)
     {
+<<<<<<< HEAD:classes/ezpersistentobject/ezdashboard_facebook.php
         $row = eZPersistentObject::fetchObject(eZDashBoardFacebook::definition(), null, array('id' => $id));
+=======
+        $row = eZPersistentObject::fetchObject(eZSocialNetworkFacebook::definition(), null, array('id' => $id));
+>>>>>>> [SocialNetwor] rename all extension files:classes/ezpersistentobject/ezsocialnetwork_facebook.php
         if (!$row) {
             return false;
         }

@@ -1,11 +1,11 @@
 <?php
 /**
- * File containing the {@link eZDashBoardJson} class
+ * File containing the {@link eZSocialNetworkJson} class
  *
  * @license GNU General Public License v2.0
  * @author Dany Ralantonisainana <lendormi1984@gmail.com>
  */
-class eZDashBoardDataJson
+class eZSocialNetworkDataJson
 {
     public function __construct()
     {
@@ -20,10 +20,10 @@ class eZDashBoardDataJson
     {
         switch ($type) {
             case 'content':
-                return eZDashBoard::fetchList();
+                return eZSocialNetwork::fetchList();
                 break;
             case 'site':
-                return eZDashBoardSite::fetchList();
+                return eZSocialNetworkSite::fetchList();
                 break;
             default:
                 # code...

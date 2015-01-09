@@ -5,4 +5,5 @@
 	'app/store/ezdashboard_site.js',
 	'app/views/ezdashboard_list.js'
 ))}
+
 <div id="list-dashboard"></div>

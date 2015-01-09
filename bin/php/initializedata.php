@@ -7,7 +7,7 @@
 require 'autoload.php';
 
 $cli = eZCLI::instance();
-$script = eZScript::instance(array( 'description' => ("eZ Publish Dashboard initialize data\n"),
+$script = eZScript::instance(array( 'description' => ("eZ Publish SocialNetwork initialize data\n"),
                                      'use-session' => false,
                                      'use-modules' => true,
                                      'use-extensions' => true,
@@ -17,18 +17,18 @@ $script->startup();
 
 $script->initialize();
 
-$dashboardIni = eZINI::instance('dashboard.ini');
-if (!($dashboardIni->hasVariable('DashBoardSettings', 'WebSite'))) {
+$dashboardIni = eZINI::instance('socialnetwork.ini');
+if (!($dashboardIni->hasVariable('SocialNetworkSettings', 'WebSite'))) {
     $cli->error("You should add a WebSite in dashboard.ini");
     $script->shutdown(1);
 }
-$websites = $dashboardIni->variable('DashBoardSettings', 'WebSite');
+$websites = $dashboardIni->variable('SocialNetworkSettings', 'WebSite');
 
 $cli->output("Going to create row in dashboard_site\n");
 
 foreach ($websites as $website) {
-    if (!empty($website) && !eZDashBoardSite::fetchByName($website)) {
-        $ezdash = eZDashBoardSite::create($website);
+    if (!empty($website) && !eZSocialNetworkSite::fetchByName($website)) {
+        $ezdash = eZSocialNetworkSite::create($website);
         $ezdash->store();
         $cli->output("$website is created\n");
     } else {

@@ -5,7 +5,7 @@
  */
 
 $cli->output("Prepare last content on this eZ Publish...");
-$dashboardIni = eZINI::instance('dashboard.ini');
+$dashboardIni = eZINI::instance('socialnetwork.ini');
 $db = eZDB::instance();
 $classArray = array();
 if ($dashboardIni->hasVariable('ContentSettings', 'ClassAvailable')) {
@@ -29,14 +29,14 @@ $params = array(
         array( 'visibility', '=', true ) // Do not fetch hidden nodes even when ShowHiddenNodes=true
     )
 );
-eZDashBoardSite::initialize();
+eZSocialNetworkSite::initialize();
 $nodes = eZContentObjectTreeNode::subTreeByNodeID($params, $rootNode);
 $cli->output("There are ". count($nodes). " nodes");
 if (count($nodes)) {
     foreach ($nodes as $key => $node) {
         $url = $node->urlAlias();
         $cli->output("Working on this content ". $url);
-        if (eZDashBoard::fetchByURL($url)) {
+        if (eZSocialNetwork::fetchByURL($url)) {
             $cli->output("Already existed");
             continue;
         }
@@ -56,7 +56,7 @@ if (count($nodes)) {
         }
         
         $db->begin();
-        $ezdash = eZDashBoard::create($attributeData);
+        $ezdash = eZSocialNetwork::create($attributeData);
         $ezdash->store();
 
         // @todo these rows are not standard
@@ -67,9 +67,9 @@ if (count($nodes)) {
             } else {
                 $authorName   = trim(str_replace("  ", " ", $author));
             }
-            $ezdashauthor = eZDashBoardAuthor::fetchByName($authorName);
+            $ezdashauthor = eZSocialNetworkAuthor::fetchByName($authorName);
             if (!$ezdashauthor) {
-                $ezdashauthor = eZDashBoardAuthor::create($authorName);
+                $ezdashauthor = eZSocialNetworkAuthor::create($authorName);
                 $ezdashauthor->store();
             }
             $ezdash->linkedToAuthor($ezdashauthor->attribute('id'));

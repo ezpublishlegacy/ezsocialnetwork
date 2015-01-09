@@ -4,7 +4,7 @@
  * @author Dany Ralantonisainana <lendormi1984@gmail.com>
  */
 
-$Module = array( 'name' => 'eZ Dashboard' );
+$Module = array( 'name' => 'eZSocialNetwork' );
 
 $ViewList = array();
 

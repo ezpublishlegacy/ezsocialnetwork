@@ -1,11 +1,11 @@
 <?php
 /**
- * File containing the {@link eZDashBoardGoogle} class
+ * File containing the {@link eZSocialNetworkGoogle} class
  *
  * @license GNU General Public License v2.0
  * @author Dany Ralantonisainana <lendormi1984@gmail.com>
  */
-class eZDashBoardGoogle extends eZPersistentObject
+class eZSocialNetworkGoogle extends eZPersistentObject
 {
     public function __construct($row)
     {
@@ -44,7 +44,7 @@ class eZDashBoardGoogle extends eZPersistentObject
             "function_attributes" => array(
             ),
             "increment_key"       => "id",
-            "class_name"          => "eZDashBoardGoogle",
+            "class_name"          => "eZSocialNetworkGoogle",
             "sort"                => array( "id" => "asc" ),
             "name"                => "ezdashboard_google"
         );
@@ -58,12 +58,16 @@ class eZDashBoardGoogle extends eZPersistentObject
             "date_add"      => time(),
             "date_modified" => time()
         );
-        return new eZDashBoardGoogle($attributeData);
+        return new eZSocialNetworkGoogle($attributeData);
     }
 
     public static function fetch($id)
     {
+<<<<<<< HEAD:classes/ezpersistentobject/ezdashboard_google.php
         $row = eZPersistentObject::fetchObject(eZDashBoardGoogle::definition(), null, array('id' => $id));
+=======
+        $row = eZPersistentObject::fetchObject(eZSocialNetworkGoogle::definition(), null, array('id' => $id));
+>>>>>>> [SocialNetwor] rename all extension files:classes/ezpersistentobject/ezsocialnetwork_google.php
         if (!$row) {
             return false;
         }

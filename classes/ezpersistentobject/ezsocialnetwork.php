@@ -1,11 +1,11 @@
 <?php
 /**
- * File containing the {@link eZDashBoard} class
+ * File containing the {@link eZSocialNetwork} class
  *
  * @license GNU General Public License v2.0
  * @author Dany Ralantonisainana <lendormi1984@gmail.com>
  */
-class eZDashBoard extends eZPersistentObject
+class eZSocialNetwork extends eZPersistentObject
 {
     public function __construct($row)
     {
@@ -152,7 +152,7 @@ class eZDashBoard extends eZPersistentObject
                 "twitter"     => "setTwitter"
             ),
             "increment_key"       => "id",
-            "class_name"          => "eZDashBoard",
+            "class_name"          => "eZSocialNetwork",
             "sort"                => array( "id" => "asc" ),
             "name"                => "ezdashboard"
         );
@@ -163,7 +163,7 @@ class eZDashBoard extends eZPersistentObject
     {
         $ini = eZINI::instance();
         $siteName = $ini->variable('SiteSettings', 'MainFrontHost');
-        $ezdashboardsite = eZDashBoardSite::fetchByName($siteName);
+        $ezdashboardsite = eZSocialNetworkSite::fetchByName($siteName);
         if (!$ezdashboardsite) {
             eZDebug::writeError("This sitename $siteName didn't exist.", __METHOD__);
             return false;
@@ -179,7 +179,7 @@ class eZDashBoard extends eZPersistentObject
             'date_add'        => time(),
             'date_modified'   => time()
         );
-        return new eZDashBoard($attributeData);
+        return new eZSocialNetwork($attributeData);
     }
 
     public static function fetch($id)
@@ -207,7 +207,7 @@ class eZDashBoard extends eZPersistentObject
 
     public function linkedToAuthor($authorID)
     {
-        return eZDashBoard::storeDashBoardInAuthor($this->attribute('id'), $authorID);
+        return eZSocialNetwork::storeDashBoardInAuthor($this->attribute('id'), $authorID);
     }
 
     public static function storeDashBoardInAuthor($dashboardID, $authorID)
@@ -237,7 +237,7 @@ class eZDashBoard extends eZPersistentObject
         if (!$asObject) {
             return $result[0];
         }
-        return new eZDashBoardAuthor($result[0]);
+        return new eZSocialNetworkAuthor($result[0]);
     }
 
     public static function fetchListByTime($strtotime)
@@ -245,7 +245,7 @@ class eZDashBoard extends eZPersistentObject
         $time = strtotime($strtotime);
 
         $result = eZPersistentObject::fetchObjectList(
-            eZDashBoard::definition(),
+            eZSocialNetwork::definition(),
             array('id'),
             array(
                 'date_create' => array('>', $time)
@@ -274,7 +274,7 @@ class eZDashBoard extends eZPersistentObject
     public function getSite()
     {
         if (!isset($this->Site)) {
-            $this->Site = eZDashBoardSite::fetch($this->attribute('site_id'), true);
+            $this->Site = eZSocialNetworkSite::fetch($this->attribute('site_id'), true);
         }
         return $this->Site;
     }
@@ -287,7 +287,7 @@ class eZDashBoard extends eZPersistentObject
     public function getFacebook()
     {
         if (!isset($this->facebook)) {
-            $this->facebook = eZDashBoardFacebook::fetch($this->attribute("facebook_id"));
+            $this->facebook = eZSocialNetworkFacebook::fetch($this->attribute("facebook_id"));
         }
         return $this->facebook;
     }
@@ -302,16 +302,16 @@ class eZDashBoard extends eZPersistentObject
             $data = $data[0];
         }
         if ($this->attribute('facebook_id')) {
-            $facebook = eZDashBoardFacebook::fetch($this->attribute('facebook_id'));
+            $facebook = eZSocialNetworkFacebook::fetch($this->attribute('facebook_id'));
             $facebook->fillData($data);
             $facebook->setAttribute('date_modified', time());
         } else {
-            $facebook = eZDashBoardFacebook::create($data);
+            $facebook = eZSocialNetworkFacebook::create($data);
         }
-        if (!($facebook instanceof eZDashBoardFacebook)) {
+        if (!($facebook instanceof eZSocialNetworkFacebook)) {
             eZDebug::writeError(
                 "Undefined attribute facebook, cannot set",
-                "eZDashBoardFacebook"
+                "eZSocialNetworkFacebook"
             );
         }
         $this->facebook = $facebook;
@@ -325,7 +325,7 @@ class eZDashBoard extends eZPersistentObject
     public function getGoogleplus()
     {
         if (!isset($this->googleplus)) {
-            $this->googleplus = eZDashBoardGoogle::fetch($this->attribute("googleplus_id"));
+            $this->googleplus = eZSocialNetworkGoogle::fetch($this->attribute("googleplus_id"));
         }
         return $this->googleplus;
     }
@@ -340,16 +340,16 @@ class eZDashBoard extends eZPersistentObject
             $data = $data[0];
         }
         if ($this->attribute('googleplus_id')) {
-            $googleplus = eZDashBoardGoogle::fetch($this->attribute('googleplus_id'));
+            $googleplus = eZSocialNetworkGoogle::fetch($this->attribute('googleplus_id'));
             $googleplus->setAttribute('count', $data['result']['metadata']['globalCounts']['count']);
             $googleplus->setAttribute('date_modified', time());
         } else {
-            $googleplus = eZDashBoardGoogle::create($data);
+            $googleplus = eZSocialNetworkGoogle::create($data);
         }
-        if (!($googleplus instanceof eZDashBoardGoogle)) {
+        if (!($googleplus instanceof eZSocialNetworkGoogle)) {
             eZDebug::writeError(
                 "Undefined attribute google, cannot set",
-                "eZDashBoardGoogle"
+                "eZSocialNetworkGoogle"
             );
         }
         $this->googleplus = $googleplus;
@@ -363,7 +363,7 @@ class eZDashBoard extends eZPersistentObject
     public function getEzpublish()
     {
         if (!isset($this->ezpublish)) {
-            $this->ezpublish = eZDashBoardeZPublishStats::fetch($this->attribute("ezpublishstats_id"));
+            $this->ezpublish = eZSocialNetworkeZPublishStats::fetch($this->attribute("ezpublishstats_id"));
         }
         return $this->ezpublish;
     }
@@ -378,16 +378,16 @@ class eZDashBoard extends eZPersistentObject
             $data = $data[0];
         }
         if ($this->attribute('ezpublishstats_id')) {
-            $ezpublish = eZDashBoardeZPublishStats::fetch($this->attribute('ezpublishstats_id'));
+            $ezpublish = eZSocialNetworkeZPublishStats::fetch($this->attribute('ezpublishstats_id'));
             $ezpublish->setAttribute('visit_count', $data['count']);
             $ezpublish->setAttribute('date_modified', time());
         } else {
-            $ezpublish = eZDashBoardeZPublishStats::create($data['count']);
+            $ezpublish = eZSocialNetworkeZPublishStats::create($data['count']);
         }
-        if (!($ezpublish instanceof eZDashBoardeZPublishStats)) {
+        if (!($ezpublish instanceof eZSocialNetworkeZPublishStats)) {
             eZDebug::writeError(
                 "Undefined attribute ezpublish, cannot set",
-                "eZDashBoardeZPublishStats"
+                "eZSocialNetworkeZPublishStats"
             );
         }
         $this->ezpublish = $ezpublish;
@@ -508,7 +508,6 @@ class eZDashBoard extends eZPersistentObject
     {
         $db = eZDB::instance();
         $socialINI = eZINI::instance('social.ini');
-
         $db->begin();
         if ($socialINI->hasVariable('SocialSettings', 'TypeHandler')) {
             $socialHandlers = $socialINI->variable('SocialSettings', 'TypeHandler');
@@ -563,7 +562,7 @@ class eZDashBoard extends eZPersistentObject
      */
     public static function getStats($uri)
     {
-        $social      = eZDashBoard::fetchByURL($uri);
+        $social      = eZSocialNetwork::fetchByURL($uri);
         $author      = $social->getAuthor();
         $facebook    = $social->getFacebook();
         $googleplus  = $social->getGoogleplus();

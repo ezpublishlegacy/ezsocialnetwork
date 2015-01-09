@@ -9,7 +9,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2 (or any later version)
  * @version 1.0.0
  * @package grazia
- * @example : 
+ * @example :
  * 1. dashboard/data/debug?ContentType=html
  * Display debug for your children
  * 2. dashboard/data/?ContentType=json
@@ -50,25 +50,22 @@ $children = array();
 $response['content'] = "";
 try {
     $bError = false;
-    $jsonInstance = new eZDashBoardDataContentType($contentType);
+    $jsonInstance = new eZSocialNetworkDataContentType($contentType);
     $jsonInstance->debug = $debugOutput;
     $response["content"] = $jsonInstance->typeInstance->getContent($type);
     if (!$response["content"]) {
         throw new Exception('Data don\'t load');
     }
-
-} catch ( Exception $e ) {
+} catch (Exception $e) {
     $response['error_text'] = $e->getMessage();
 }
-echo ezjscAjaxContent::autoEncode( $response, $contentType );
+echo ezjscAjaxContent::autoEncode($response, $contentType);
 
 if ($debugOutput) {
     echo "/*\r\n";
-    eZDebug::printReport( false, true );
+    eZDebug::printReport(false, true);
     echo "\r\n*/";
 }
 
 eZDB::checkTransactionCounter();
 eZExecution::cleanExit();
-
-?>
