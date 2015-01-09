@@ -251,11 +251,12 @@ class eZSocialNetwork extends eZPersistentObject
                 'date_create' => array('>', $time)
             ),
             array(
-                'date_modified' => 'DESC'
+                'id' => 'desc'
             ),
             null,
             null
         );
+
         if (!$result) {
             return false;
         }
@@ -563,6 +564,9 @@ class eZSocialNetwork extends eZPersistentObject
     public static function getStats($uri)
     {
         $social      = eZSocialNetwork::fetchByURL($uri);
+        if (!($social instanceof eZSocialNetwork)) {
+            return false;
+        }
         $author      = $social->getAuthor();
         $facebook    = $social->getFacebook();
         $googleplus  = $social->getGoogleplus();

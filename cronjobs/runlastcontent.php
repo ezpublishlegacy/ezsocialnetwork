@@ -5,17 +5,17 @@
  */
 
 $cli->output("Prepare last content on this eZ Publish...");
-$socialnetworkIni = eZINI::instance('socialnetwork.ini');
-$db = eZDB::instance();
-$classArray = array();
+$socialnetworkIni   = eZINI::instance('socialnetwork.ini');
+$db                 = eZDB::instance();
+$classArray         = array();
 if ($socialnetworkIni->hasVariable('ContentSettings', 'ClassAvailable')) {
-    $classArray = $socialnetworkIni->variable('ContentSettings', 'ClassAvailable');
+    $classArray     = $socialnetworkIni->variable('ContentSettings', 'ClassAvailable');
 }
 $imageAttributeName = $socialnetworkIni->variable('ContentSettings', 'AttributeImageName');
-$rootNode     = 2;
-$now = time();
-$aftertytime = mktime(0, 0, 0, date('m', time()), date('d', time()) - 120, date('Y', time()));
-$params = array(
+$rootNode           = 2;
+$now                = strtotime(date('Y-m-d', time()));
+$aftertytime        = strtotime(date('Y-m-d', time()-(30 * 24 * 60 * 60)));
+$params             = array(
     'ClassFilterArray' => $classArray,
     'ClassFilterType'  => true,
     'Depth'            => false,
