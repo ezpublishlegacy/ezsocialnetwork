@@ -46,7 +46,7 @@ class eZSocialNetworkSite extends eZPersistentObject
             "increment_key"       => "id",
             "class_name"          => "eZSocialNetworkSite",
             "sort"                => array( "id" => "asc" ),
-            "name"                => "ezdashboard_site"
+            "name"                => "ezsocialnetwork_site"
         );
         return $definition;
     }
@@ -56,8 +56,8 @@ class eZSocialNetworkSite extends eZPersistentObject
         $ini = eZINI::instance();
         $siteName = $ini->variable('SiteSettings', 'SiteURL');
         if (!eZSocialNetworkSite::fetchByName($siteName)) {
-            $ezdash = eZSocialNetworkSite::create($siteName);
-            $ezdash->store();
+            $webSite = eZSocialNetworkSite::create($siteName);
+            $webSite->store();
         }
     }
 
@@ -73,26 +73,22 @@ class eZSocialNetworkSite extends eZPersistentObject
 
     public static function fetchByName($name, $asObject = true)
     {
-<<<<<<< HEAD:classes/ezpersistentobject/ezdashboard_site.php
-        return eZPersistentObject::fetchObject(eZDashBoardSite::definition(),
-=======
-        return eZPersistentObject::fetchObject(eZSocialNetworkSite::definition(),
->>>>>>> [SocialNetwor] rename all extension files:classes/ezpersistentobject/ezsocialnetwork_site.php
-                                                null,
-                                                array( 'LOWER( site )' => strtolower($name) ),
-                                                $asObject);
+        return eZPersistentObject::fetchObject(
+            eZSocialNetworkSite::definition(),
+            null,
+            array( 'LOWER( site )' => strtolower($name) ),
+            $asObject
+        );
     }
 
     public static function fetch($id, $asObject = null)
     {
-<<<<<<< HEAD:classes/ezpersistentobject/ezdashboard_site.php
-        return eZPersistentObject::fetchObject(eZDashBoardSite::definition(),
-=======
-        return eZPersistentObject::fetchObject(eZSocialNetworkSite::definition(),
->>>>>>> [SocialNetwor] rename all extension files:classes/ezpersistentobject/ezsocialnetwork_site.php
-                                                null,
-                                                array( 'id' => $id ),
-                                                $asObject);
+        return eZPersistentObject::fetchObject(
+            eZSocialNetworkSite::definition(),
+            null,
+            array( 'id' => $id ),
+            $asObject
+        );
     }
 
     /*!
@@ -100,7 +96,7 @@ class eZSocialNetworkSite extends eZPersistentObject
     */
     public static function fetchList()
     {
-        $sql = "SELECT * FROM ezdashboard_site ORDER BY id ASC";
+        $sql = "SELECT * FROM ezsocialnetwork_site ORDER BY id ASC";
         $db = eZDB::instance();
         return $db->arrayQuery($sql, array());
     }

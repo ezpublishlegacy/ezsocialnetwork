@@ -7,11 +7,12 @@
 
 class GooglePlusAPI extends SocialRequest
 {
-	const VERSION = "v1";
+    const VERSION = "v1";
     const HOST = 'https://clients6.google.com/';
     const TIMEOUT = 2;
 
-    private function __construct() {
+    private function __construct()
+    {
         $this->configCurl = array(
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_POST => true,
@@ -24,18 +25,20 @@ class GooglePlusAPI extends SocialRequest
      * @param  [type] $method [description]
      * @return [type]         [description]
      */
-    public function url($method) {
+    public function url($method)
+    {
         return GooglePlusAPI::HOST.$method;
     }
 
     /**
      *  API will be deprecated
-     * 
+     *
      * Check back here for future changes.
      * @param  string $url [description]
      * @return [type]      [description]
      */
-    public static function statsUrl($parameters) {
+    public static function statsUrl($parameters)
+    {
         $instanceGoogle = new GooglePlusAPI();
         $request = array(
             'method' => 'pos.plusones.get',
@@ -61,10 +64,9 @@ class GooglePlusAPI extends SocialRequest
         $jsonString = $instanceGoogle->request($instanceGoogle->url("rpc"), "[".json_encode($request)."]");
         $json = json_decode($jsonString, true);
         if (!$json) {
-            eZDebug::writeError( "No Data", 'Google API' );
+            eZDebug::writeError("No Data", 'Google API');
             return false;
         }
         return $json;
     }
 }
-

@@ -46,7 +46,7 @@ class eZSocialNetworkeZPublishStats extends eZPersistentObject
             "increment_key"       => "id",
             "class_name"          => "eZSocialNetworkeZPublishStats",
             "sort"                => array( "id" => "asc" ),
-            "name"                => "ezdashboard_ezpublish"
+            "name"                => "ezsocialnetwork_ezpublish"
         );
         return $definition;
     }
@@ -64,7 +64,7 @@ class eZSocialNetworkeZPublishStats extends eZPersistentObject
     public static function fetch($id, $asObject = true)
     {
         return eZPersistentObject::fetchObject(
-            eZDashBoardeZPublishStats::definition(),
+            eZSocialNetworkeZPublishStats::definition(),
             null,
             array( 'id' => $id ),
             $asObject
@@ -73,12 +73,12 @@ class eZSocialNetworkeZPublishStats extends eZPersistentObject
 
     public static function statsUrl($url)
     {
-        $dashboardIni = eZINI::instance('socialnetwork.ini');
+        $socialnetworkIni = eZINI::instance('socialnetwork.ini');
         eZURLAliasML::translate($url);
         $urlArray = explode('/', $url);
         $nodeArray = eZContentObjectTreeNode::fetch(end($urlArray), false, false);
-        if ($dashboardIni->hasVariable('SocialNetworkSettings', 'eZPublishCounterHandler') && $nodeArray) {
-            $ezCountHandler = $dashboardIni->variable('SocialNetworkSettings', 'eZPublishCounterHandler');
+        if ($socialnetworkIni->hasVariable('SocialNetworkSettings', 'eZPublishCounterHandler') && $nodeArray) {
+            $ezCountHandler = $socialnetworkIni->variable('SocialNetworkSettings', 'eZPublishCounterHandler');
             return $ezCountHandler::fetch($nodeArray['contentobject_id'], false);
         }
         return false;

@@ -12,7 +12,8 @@ class TwitterAPI extends SocialRequest
     const FORMAT = 'json';
     const TIMEOUT = 2;
 
-    private function __construct() {
+    private function __construct()
+    {
         $this->configCurl = array(
             CURLOPT_FAILONERROR => true,
             CURLOPT_TIMEOUT => self::TIMEOUT
@@ -24,7 +25,8 @@ class TwitterAPI extends SocialRequest
      * @param  [type] $method [description]
      * @return [type]         [description]
      */
-    public function url($method) {
+    public function url($method)
+    {
         return TwitterAPI::HOST.$method;
     }
 
@@ -33,7 +35,8 @@ class TwitterAPI extends SocialRequest
      * @param  [type] $url [description]
      * @return [type]      [description]
      */
-    public static function statsUrl($url) {
+    public static function statsUrl($url)
+    {
         $instanceTwitter = new TwitterAPI();
         /**
          * This instance return an object JSON
@@ -45,4 +48,3 @@ class TwitterAPI extends SocialRequest
         return isset($json['count'])?intval($json['count']):0;
     }
 }
-

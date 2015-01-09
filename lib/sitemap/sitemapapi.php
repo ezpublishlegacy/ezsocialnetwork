@@ -9,7 +9,8 @@ class SitemapAPI extends SocialRequest
 {
     const TIMEOUT = 2;
 
-    private function __construct() {
+    private function __construct()
+    {
         $this->configCurl = array();
     }
 
@@ -18,7 +19,8 @@ class SitemapAPI extends SocialRequest
      * @param  [type] $parameters [description]
      * @return [type]             [description]
      */
-    public static function getContent($parameters) {
+    public static function getContent($parameters)
+    {
         $instanceSitemap = new SitemapAPI();
         /**
          * This instance return an object XML
@@ -33,15 +35,16 @@ class SitemapAPI extends SocialRequest
      * @param  string $xmlString
      * @return SimpleXMLElement
      */
-    public function load($xmlString) {
+    public function load($xmlString)
+    {
         libxml_use_internal_errors(true);
         $xmlSitemap = simplexml_load_string($xmlString);
         if (!$xmlSitemap) {
             $xmlErrors = "";
-            foreach(libxml_get_errors() as $error) {
+            foreach (libxml_get_errors() as $error) {
                 $xmlErrors = $error->message . "\n";
             }
-            eZDebug::writeError( "This document is invalid : ".$xmlErrors, 'Sitemap API' );
+            eZDebug::writeError("This document is invalid : ".$xmlErrors, 'Sitemap API');
             return false;
         }
         return $xmlSitemap;
@@ -52,7 +55,8 @@ class SitemapAPI extends SocialRequest
      * @param  SimpleXMLElement $xmlItem [description]
      * @return [type]                    [description]
      */
-    public static function getStatsOnAllSocialNetwork(SimpleXMLElement $xmlItem){
+    public static function getStatsOnAllSocialNetwork(SimpleXMLElement $xmlItem)
+    {
         $itemUrl              = $xmlItem->loc;
         $itemPriority         = $xmlItem->priority;
         $itemFrequence        = $xmlItem->changefreq;
@@ -65,7 +69,8 @@ class SitemapAPI extends SocialRequest
      * @param  array  $xmlArray [description]
      * @return [type]           [description]
      */
-    public static function incrementXml($xmlArray = array()) {
+    public static function incrementXml($xmlArray = array())
+    {
         if (count($xmlArray)) {
             foreach ($xml->url as $xmlItem) {
                 $result = SitemapAPI::getStatsOnAllSocialNetwork($xmlItem);
@@ -75,4 +80,3 @@ class SitemapAPI extends SocialRequest
         }
     }
 }
-

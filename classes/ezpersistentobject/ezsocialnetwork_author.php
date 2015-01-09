@@ -46,7 +46,7 @@ class eZSocialNetworkAuthor extends eZPersistentObject
             "increment_key"       => "id",
             "class_name"          => "eZSocialNetworkAuthor",
             "sort"                => array( "id" => "asc" ),
-            "name"                => "ezdashboard_author"
+            "name"                => "ezsocialnetwork_author"
         );
         return $definition;
     }
@@ -63,11 +63,7 @@ class eZSocialNetworkAuthor extends eZPersistentObject
 
     public static function fetchByName($name, $asObject = true)
     {
-<<<<<<< HEAD:classes/ezpersistentobject/ezdashboard_author.php
-        return eZPersistentObject::fetchObject(eZDashBoardAuthor::definition(),
-=======
         return eZPersistentObject::fetchObject(eZSocialNetworkAuthor::definition(),
->>>>>>> [SocialNetwor] rename all extension files:classes/ezpersistentobject/ezsocialnetwork_author.php
                                                 null,
                                                 array( 'name' => $name),
                                                 $asObject);

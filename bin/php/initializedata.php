@@ -17,14 +17,14 @@ $script->startup();
 
 $script->initialize();
 
-$dashboardIni = eZINI::instance('socialnetwork.ini');
-if (!($dashboardIni->hasVariable('SocialNetworkSettings', 'WebSite'))) {
-    $cli->error("You should add a WebSite in dashboard.ini");
+$socialnetworkIni = eZINI::instance('socialnetwork.ini');
+if (!($socialnetworkIni->hasVariable('SocialNetworkSettings', 'WebSite'))) {
+    $cli->error("You should add a WebSite in socialnetwork.ini");
     $script->shutdown(1);
 }
-$websites = $dashboardIni->variable('SocialNetworkSettings', 'WebSite');
+$websites = $socialnetworkIni->variable('SocialNetworkSettings', 'WebSite');
 
-$cli->output("Going to create row in dashboard_site\n");
+$cli->output("Going to create row in socialnetwork_site\n");
 
 foreach ($websites as $website) {
     if (!empty($website) && !eZSocialNetworkSite::fetchByName($website)) {

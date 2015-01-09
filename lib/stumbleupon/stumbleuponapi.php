@@ -11,7 +11,8 @@ class StumbleUponAPI extends SocialRequest
     const HOST = 'http://www.stumbleupon.com/';
     const TIMEOUT = 2;
 
-    private function __construct() {
+    private function __construct()
+    {
         $this->configCurl = array(
             CURLOPT_FAILONERROR => true,
             CURLOPT_TIMEOUT => self::TIMEOUT
@@ -23,20 +24,22 @@ class StumbleUponAPI extends SocialRequest
      * @param  [type] $method [description]
      * @return [type]         [description]
      */
-    public function url($method) {
+    public function url($method)
+    {
         return StumbleUponAPI::HOST.$method;
     }
 
     /**
      * The Badge API allows web site publishers to create custom StumbleUpon badges
-     * on their web pages by querying information about the page which the badge 
+     * on their web pages by querying information about the page which the badge
      * sits on. This is provided through a simple REST API with output in JSON
      * format.
-     * 
+     *
      * @param  string $url [description]
      * @return [type]      [description]
      */
-    public static function statsUrl($parameters) {
+    public static function statsUrl($parameters)
+    {
         $instanceStumbleUpon = new StumbleUponAPI();
         /**
          * This instance return an object JSON
@@ -44,11 +47,11 @@ class StumbleUponAPI extends SocialRequest
          * result           object      The resulting data from the API call.
          *      url         string      The URL you sent us. This may be a canonicalized URL,
          *                              but should point to the same content. A canonical URL
-         *                              in our system is one without tracking codes, anchor #’s, 
+         *                              in our system is one without tracking codes, anchor #’s,
          *                              etc.
          *      in_index    literal     If the URL you sent has been submitted to us by our users,
          *                              this will return true. Otherwise, we will return false.
-         *      publicid    string      This is the identifier to this URL in our index. This 
+         *      publicid    string      This is the identifier to this URL in our index. This
          *                              value is unused for now, but will very likely be used in
          *                              the future.
          *      views       number      The number of times this URL has been stumbled upon by our users.
@@ -78,10 +81,9 @@ class StumbleUponAPI extends SocialRequest
          * 9031     Rate-limit exceeded
          */
         if (isset($json['error_code'])) {
-            eZDebug::writeError( $json['error_code'] . ": ". $json['error_message'], 'StumbleUpon API' );
+            eZDebug::writeError($json['error_code'] . ": ". $json['error_message'], 'StumbleUpon API');
             return false;
         }
         return isset($json['result'])?$json['result']:0;
     }
 }
-

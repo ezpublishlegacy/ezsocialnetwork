@@ -76,7 +76,7 @@ class eZSocialNetworkFacebook extends eZPersistentObject
             "increment_key"       => "id",
             "class_name"          => "eZSocialNetworkFacebook",
             "sort"                => array( "id" => "asc" ),
-            "name"                => "ezdashboard_facebook"
+            "name"                => "ezsocialnetwork_facebook"
         );
         return $definition;
     }
@@ -114,11 +114,7 @@ class eZSocialNetworkFacebook extends eZPersistentObject
 
     public static function fetch($id)
     {
-<<<<<<< HEAD:classes/ezpersistentobject/ezdashboard_facebook.php
-        $row = eZPersistentObject::fetchObject(eZDashBoardFacebook::definition(), null, array('id' => $id));
-=======
         $row = eZPersistentObject::fetchObject(eZSocialNetworkFacebook::definition(), null, array('id' => $id));
->>>>>>> [SocialNetwor] rename all extension files:classes/ezpersistentobject/ezsocialnetwork_facebook.php
         if (!$row) {
             return false;
         }

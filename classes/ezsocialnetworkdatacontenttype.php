@@ -14,9 +14,9 @@ class eZSocialNetworkDataContentType
      */
     public function __construct($contentType)
     {
-        $dashboardIni = eZINI::instance('socialnetwork.ini');
-        if ($dashboardIni->hasVariable('SocialNetworkSettings', 'ClassContentType')) {
-            $classContentType = $dashboardIni->variable('SocialNetworkSettings', 'ClassContentType');
+        $socialnetworkIni = eZINI::instance('socialnetwork.ini');
+        if ($socialnetworkIni->hasVariable('SocialNetworkSettings', 'ClassContentType')) {
+            $classContentType = $socialnetworkIni->variable('SocialNetworkSettings', 'ClassContentType');
             $this->typeInstance = new $classContentType[$contentType];
         }
     }

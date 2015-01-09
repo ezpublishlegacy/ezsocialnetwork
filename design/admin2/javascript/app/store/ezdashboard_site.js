@@ -1,5 +1,5 @@
 var storeSite = Ext.create('Ext.data.JsonStore', {
-    model: 'eZDashBoardSite',
+    model: 'eZSocialNetworkSite',
     proxy: {
         type: 'ajax',
         url: '/dashboard/data/site?ContentType=json',

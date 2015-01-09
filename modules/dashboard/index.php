@@ -8,8 +8,7 @@ $tpl = eZTemplate::factory();
 
 $Result = array();
 $Result['navigation_part'] = 'ezsocialnetworknavigationpart';
-// $Result['content'] = $tpl->fetch( 'design:dashboard/dashboard.tpl' );
-$Result['path'] = array( array( 'text' => ezpI18n::tr('ezdashboard', 'Dashboard'),
+$Result['path'] = array( array( 'text' => ezpI18n::tr('ezsocialnetwork', 'Dashboard'),
                                 'url' => false ) );
 $contentInfoArray['persistent_variable'] = false;
 if ($tpl->variable('persistent_variable') !== false) {

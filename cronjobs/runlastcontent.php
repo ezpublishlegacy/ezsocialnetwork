@@ -5,13 +5,13 @@
  */
 
 $cli->output("Prepare last content on this eZ Publish...");
-$dashboardIni = eZINI::instance('socialnetwork.ini');
+$socialnetworkIni = eZINI::instance('socialnetwork.ini');
 $db = eZDB::instance();
 $classArray = array();
-if ($dashboardIni->hasVariable('ContentSettings', 'ClassAvailable')) {
-    $classArray = $dashboardIni->variable('ContentSettings', 'ClassAvailable');
+if ($socialnetworkIni->hasVariable('ContentSettings', 'ClassAvailable')) {
+    $classArray = $socialnetworkIni->variable('ContentSettings', 'ClassAvailable');
 }
-$imageAttributeName = $dashboardIni->variable('ContentSettings', 'AttributeImageName');
+$imageAttributeName = $socialnetworkIni->variable('ContentSettings', 'AttributeImageName');
 $rootNode     = 2;
 $now = time();
 $aftertytime = mktime(0, 0, 0, date('m', time()), date('d', time()) - 120, date('Y', time()));

@@ -1,4 +1,4 @@
-Ext.define('eZDashBoardSite',{
+Ext.define('eZSocialNetworkSite',{
     extend: 'Ext.data.Model',
     proxy: {
         type: 'ajax',

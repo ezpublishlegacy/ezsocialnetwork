@@ -38,24 +38,24 @@ class SocialRequest
      */
     public function call($url, $jsonPost)
     {
-        $dashboardINI = eZINI::instance('socialnetwork.ini');
+        $socialnetworkINI = eZINI::instance('socialnetwork.ini');
         ezpEvent::getInstance()->filter('socialnetwork/sharecount',
             array(
                 'social' => get_class($this),
                 'url' => $url,
             )
         );
-        if ($dashboardINI->variable('SocialNetworkSettings', 'DevelopmentMode') === 'enabled') {
+        if ($socialnetworkINI->variable('SocialNetworkSettings', 'DevelopmentMode') === 'enabled') {
             $data['pack_level'] = 0;
             $class = strtolower(get_class($this));
-            return file_get_contents('extension/ezdashboard/tests/'.$class.'.json');
+            return file_get_contents('extension/ezsocialnetwork/tests/'.$class.'.json');
         } else {
             $curl = new CurlHttpClient($url);
             $curl->setOption($this->configCurl);
             if ($jsonPost) {
                 $curl->setOption(array(
                     CURLOPT_POSTFIELDS => $jsonPost,
-                    CURLOPT_USERAGENT  => $dashboardINI->variable('SocialNetworkSettings', 'UserAgent')
+                    CURLOPT_USERAGENT  => $socialnetworkINI->variable('SocialNetworkSettings', 'UserAgent')
                 ));
             }
             return $curl->getResponse();

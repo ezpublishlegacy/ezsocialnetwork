@@ -2,8 +2,8 @@ License: See, LICENSE.txt
 
 ezsocialnetwork is an extension with all library to manage and analyse your content
 
-// Add in dashboard.ini a website value
-[DashBoardSettings]
+// Add in socialnetwork.ini a website value
+[SocialNetworkSettings]
  WebSite[]
  This feature allow to have a lot website on this plateform
 

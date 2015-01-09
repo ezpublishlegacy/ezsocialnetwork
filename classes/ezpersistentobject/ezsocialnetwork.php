@@ -154,7 +154,7 @@ class eZSocialNetwork extends eZPersistentObject
             "increment_key"       => "id",
             "class_name"          => "eZSocialNetwork",
             "sort"                => array( "id" => "asc" ),
-            "name"                => "ezdashboard"
+            "name"                => "ezsocialnetwork"
         );
         return $definition;
     }
@@ -163,13 +163,13 @@ class eZSocialNetwork extends eZPersistentObject
     {
         $ini = eZINI::instance();
         $siteName = $ini->variable('SiteSettings', 'MainFrontHost');
-        $ezdashboardsite = eZSocialNetworkSite::fetchByName($siteName);
-        if (!$ezdashboardsite) {
+        $ezsocialnetworksite = eZSocialNetworkSite::fetchByName($siteName);
+        if (!$ezsocialnetworksite) {
             eZDebug::writeError("This sitename $siteName didn't exist.", __METHOD__);
             return false;
         }
         $attributeData = array(
-            'site_id'         => $ezdashboardsite->attribute('id'),
+            'site_id'         => $ezsocialnetworksite->attribute('id'),
             'name'            => $data['name'],
             'url'             => $data['url'],
             'hash_url'        => $data['hash_url'],
@@ -210,11 +210,11 @@ class eZSocialNetwork extends eZPersistentObject
         return eZSocialNetwork::storeDashBoardInAuthor($this->attribute('id'), $authorID);
     }
 
-    public static function storeDashBoardInAuthor($dashboardID, $authorID)
+    public static function storeDashBoardInAuthor($socialNetworkID, $authorID)
     {
         $db = eZDB::instance();
-        return $db->query("INSERT INTO `ezdashboard_dashboard_author` (`dashboard_id`, `author_id`)
-                            VALUES ('".$dashboardID."', '".$authorID."');");
+        return $db->query("INSERT INTO `ezsocialnetwork_dashboard_author` (`dashboard_id`, `author_id`)
+                            VALUES ('".$socialNetworkID."', '".$authorID."');");
     }
 
     public function getAuthor($asObject = true)
@@ -226,9 +226,9 @@ class eZSocialNetwork extends eZPersistentObject
                 ezda.name,
                 ezda.date_add,
                 ezda.date_modified
-            FROM ezdashboard as ezd
-            LEFT JOIN ezdashboard_dashboard_author as ezdda on (ezd.id = ezdda.dashboard_id)
-            LEFT JOIN ezdashboard_author as ezda on (ezdda.author_id = ezda.id)
+            FROM ezsocialnetwork as ezd
+            LEFT JOIN ezsocialnetwork_dashboard_author as ezdda on (ezd.id = ezdda.dashboard_id)
+            LEFT JOIN ezsocialnetwork_author as ezda on (ezdda.author_id = ezda.id)
             WHERE ezd.id = '".$this->attribute('hash_url')."'"
         );
         if (!$result) {
@@ -539,9 +539,9 @@ class eZSocialNetwork extends eZPersistentObject
     */
     public static function fetchList($offset = false, $limit = false)
     {
-        $sql = "SELECT ezd.*, ezda.name as author FROM ezdashboard as ezd
-                LEFT JOIN ezdashboard_dashboard_author as ezdda on (ezd.id = ezdda.dashboard_id)
-                LEFT JOIN ezdashboard_author as ezda on (ezdda.author_id = ezda.id)
+        $sql = "SELECT ezd.*, ezda.name as author FROM ezsocialnetwork as ezd
+                LEFT JOIN ezsocialnetwork_dashboard_author as ezdda on (ezd.id = ezdda.dashboard_id)
+                LEFT JOIN ezsocialnetwork_author as ezda on (ezdda.author_id = ezda.id)
                 ORDER BY date_add DESC";
         $parameters = array();
         if ($offset !== false) {

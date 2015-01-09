@@ -23,18 +23,20 @@ class RedditAPI extends SocialRequest
      * @param  [type] $method [description]
      * @return [type]         [description]
      */
-    public function url($method) {
+    public function url($method)
+    {
         return RedditAPI::HOST.$method;
     }
 
     /**
      *  API will be deprecated
-     * 
+     *
      * Check back here for future changes.
      * @param  string $url [description]
      * @return [type]      [description]
      */
-    public static function statsUrl($parameters) {
+    public static function statsUrl($parameters)
+    {
         $instanceReddit = new RedditAPI();
         /**
          * This instance return an object JSON
@@ -46,10 +48,9 @@ class RedditAPI extends SocialRequest
         $jsonString = $instanceReddit->request($instanceReddit->url("button_info.json"), $parameters);
         $json = json_decode($jsonString, true);
         if (empty($json)) {
-            eZDebug::writeError( "No Data", 'Delicious API' );
+            eZDebug::writeError("No Data", 'Delicious API');
             return false;
         }
         return $json;
     }
 }
-

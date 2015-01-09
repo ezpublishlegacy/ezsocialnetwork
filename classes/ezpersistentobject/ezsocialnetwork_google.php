@@ -46,7 +46,7 @@ class eZSocialNetworkGoogle extends eZPersistentObject
             "increment_key"       => "id",
             "class_name"          => "eZSocialNetworkGoogle",
             "sort"                => array( "id" => "asc" ),
-            "name"                => "ezdashboard_google"
+            "name"                => "ezsocialnetwork_google"
         );
         return $definition;
     }
@@ -63,11 +63,7 @@ class eZSocialNetworkGoogle extends eZPersistentObject
 
     public static function fetch($id)
     {
-<<<<<<< HEAD:classes/ezpersistentobject/ezdashboard_google.php
-        $row = eZPersistentObject::fetchObject(eZDashBoardGoogle::definition(), null, array('id' => $id));
-=======
         $row = eZPersistentObject::fetchObject(eZSocialNetworkGoogle::definition(), null, array('id' => $id));
->>>>>>> [SocialNetwor] rename all extension files:classes/ezpersistentobject/ezsocialnetwork_google.php
         if (!$row) {
             return false;
         }

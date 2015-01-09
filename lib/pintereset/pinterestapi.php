@@ -11,7 +11,8 @@ class PinterestAPI extends SocialRequest
     const HOST = 'http://api.pinterest.com/';
     const TIMEOUT = 2;
 
-    private function __construct() {
+    private function __construct()
+    {
         $this->configCurl = array(
             CURLOPT_FAILONERROR => true,
             CURLOPT_TIMEOUT => self::TIMEOUT
@@ -23,7 +24,8 @@ class PinterestAPI extends SocialRequest
      * @param  [type] $method [description]
      * @return [type]         [description]
      */
-    public function url($method) {
+    public function url($method)
+    {
         return PinterestAPI::HOST.$method;
     }
 
@@ -32,7 +34,8 @@ class PinterestAPI extends SocialRequest
      * @param  string $url [description]
      * @return [type]      [description]
      */
-    public static function statsUrl($parameters) {
+    public static function statsUrl($parameters)
+    {
         $instancePinterest = new PinterestAPI();
         /**
          * This instance return an object JSON
@@ -42,10 +45,9 @@ class PinterestAPI extends SocialRequest
         $jsonString = preg_replace("/^receiveCount\((.*)\)$/", "$1", $jsonString);
         $json       = json_decode($jsonString, true);
         if (isset($json['error'])) {
-            eZDebug::writeError( $json['error'], 'Pinterest API' );
+            eZDebug::writeError($json['error'], 'Pinterest API');
             return false;
         }
         return isset($json['count'])?intval($json['count']):0;
     }
 }
-
