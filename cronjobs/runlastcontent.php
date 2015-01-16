@@ -7,6 +7,11 @@
 $cli->output("Prepare last content on this eZ Publish...");
 $socialnetworkIni   = eZINI::instance('socialnetwork.ini');
 $db                 = eZDB::instance();
+// disabled binary log on this session mysqli
+if ($socialnetworkIni->hasVariable('SocialNetworkSettings', 'BinaryLog') &&
+    $socialnetworkIni->variable('SocialNetworkSettings', 'BinaryLog') == "enabled") {
+    $db->query("set sql_log_bin = 0;");
+}
 $classArray         = array();
 if ($socialnetworkIni->hasVariable('ContentSettings', 'ClassAvailable')) {
     $classArray     = $socialnetworkIni->variable('ContentSettings', 'ClassAvailable');

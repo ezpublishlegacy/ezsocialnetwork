@@ -5,8 +5,13 @@
  */
 
 $cli->output("Prepare to update all data social network on this eZ Publish...");
-
+$db = eZDB::instance();
 $socialNetworkINI = eZINI::instance('socialnetwork.ini');
+// disabled binary log on this session mysqli
+if ($socialNetworkINI->hasVariable('SocialNetworkSettings', 'BinaryLog') &&
+    $socialNetworkINI->variable('SocialNetworkSettings', 'BinaryLog') == "enabled") {
+    $db->query("set sql_log_bin = 0;");
+}
 $ezdashs = eZSocialNetwork::fetchListByTime('-1 month');
 if ($ezdashs) {
     foreach ($ezdashs as $key => $ezdashID) {
