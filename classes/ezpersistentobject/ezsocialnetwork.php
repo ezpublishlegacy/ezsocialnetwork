@@ -175,7 +175,7 @@ class eZSocialNetwork extends eZPersistentObject
             'hash_url'        => $data['hash_url'],
             'date_create'     => $data['date_create'],
             'class_identifier'=> $data['class_identifier'],
-            'image'           => $data['image'],
+            'image'           => (isset($data['image']) ? $data['image'] : ''),
             'date_add'        => time(),
             'date_modified'   => time()
         );
