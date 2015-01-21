@@ -162,7 +162,7 @@ class eZSocialNetwork extends eZPersistentObject
     public static function create($data)
     {
         $ini = eZINI::instance();
-        $siteName = $ini->variable('SiteSettings', 'MainFrontHost');
+        $siteName = $ini->variable('SiteSettings', 'SiteURL');
         $ezsocialnetworksite = eZSocialNetworkSite::fetchByName($siteName);
         if (!$ezsocialnetworksite) {
             eZDebug::writeError("This sitename $siteName didn't exist.", __METHOD__);
